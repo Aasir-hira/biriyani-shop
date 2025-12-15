@@ -5,129 +5,219 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Royal Spice Biriyani House</title>
 
+<!-- jsPDF for Invoice -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Sound Effects -->
+<audio id="click-sound" src="https://www.soundjay.com/buttons/sounds/button-09.mp3"></audio>
+<audio id="success-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #fff7e6;
-        color: #4a2c2a;
-    }
-    header {
-        background: #b33c00;
-        padding: 20px;
-        text-align: center;
-        color: white;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    nav {
-        background: #ffb84d;
-        padding: 12px;
-        text-align: center;
-    }
-    nav a {
-        margin: 0 15px;
-        color: #4a2c2a;
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: bold;
-    }
-    .hero {
-        background: url('https://images.unsplash.com/photo-1608138273246-3c4d475a726a') center/cover no-repeat;
-        height: 350px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-shadow: 2px 2px 6px black;
-        font-size: 36px;
-        font-weight: bold;
-        text-align: center;
-        padding: 20px;
-    }
+/* Body and General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff7e6;
+    color: #4a2c2a;
+    overflow-x: hidden;
+}
 
-    /* -----------------------------------------
-       MENU BACKGROUND IMAGE + OVERLAY
-    -------------------------------------------- */
-    #menu {
-        background: url('https://images.unsplash.com/photo-1543353071-087092ec393a') center/cover no-repeat;
-        padding: 40px;
-        position: relative;
-        color: white;
-    }
+/* Header */
+header {
+    background: #b33c00;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+}
 
-    #menu::before {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0, 0, 0, 0.55); /* dark overlay for readability */
-        z-index: 1;
-    }
+/* Navigation */
+nav {
+    background: #ffb84d;
+    padding: 12px;
+    text-align: center;
+}
+nav a {
+    margin: 0 15px;
+    color: #4a2c2a;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+nav a:hover {
+    color: #fff;
+    text-shadow: 2px 2px 5px #cc3300;
+    transform: scale(1.1);
+}
 
-    #menu > * {
-        position: relative;
-        z-index: 2;
-    }
+/* Hero Section with Orange Glow */
+.hero {
+    background: url('https://images.unsplash.com/photo-1608138273246-3c4d475a726a') center/cover no-repeat;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    color: orange;
+    text-shadow: 0 0 15px orange;
+}
 
-    .menu-item {
-        background: rgba(255, 224, 179, 0.85);
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        color: #4a2c2a;
-    }
+/* Menu Section */
+#menu {
+    background: url('https://images.unsplash.com/photo-1543353071-087092ec393a') center/cover no-repeat;
+    padding: 40px;
+    position: relative;
+    color: white;
+}
+#menu::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+}
+#menu > * { position: relative; z-index: 2; }
+.menu-item {
+    background: rgba(255, 224, 179, 0.85);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4a2c2a;
+    transition: all 0.3s ease;
+}
+.menu-item:hover { 
+    transform: scale(1.02); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+}
+.menu-item button {
+    background: #cc3300;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.menu-item button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
-    .menu-item button {
-        background: #cc3300;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+/* Cart Section */
+#cart-section {
+    background: #fff0d6;
+    padding: 40px;
+    border-radius: 10px;
+}
+.cart-item { display: flex; justify-content: space-between; margin: 8px 0; }
+.order-btn {
+    background: #cc3300;
+    padding: 15px 30px;
+    color: white;
+    font-size: 20px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.order-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
 
-    #cart-section {
-        background: #fff0d6;
-        padding: 40px;
-        border-radius: 10px;
-    }
+/* Footer */
+footer { background: #b33c00; color: white; text-align: center; padding: 20px; margin-top: 40px; }
 
-    .cart-item {
-        display: flex;
-        justify-content: space-between;
-        margin: 8px 0;
-    }
+/* Popups */
+#order-popup, #payment-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    z-index: 100;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+}
+#order-popup h2, #payment-popup h2 { color: #4a2c2a; }
+#order-popup .green-tick { font-size: 50px; color: green; animation: pop 0.5s ease-out; }
+@keyframes pop { 0% { transform: scale(0); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+#order-popup button, #payment-popup button {
+    margin-top: 15px;
+    background: #cc3300;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#order-popup button:hover, #payment-popup button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+#confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 99;
+}
+#payment-popup input {
+    width: 90%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+#payment-popup input:focus {
+    border-color: #cc3300;
+    box-shadow: 0 0 5px #cc3300;
+    outline: none;
+}
+#whatsapp-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #25d366;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+#whatsapp-btn:hover {
+    background-color: #128c7e;
+    transform: scale(1.05);
+}
 
-    .order-btn {
-        background: #cc3300;
-        padding: 15px 30px;
-        color: white;
-        font-size: 20px;
-        border-radius: 8px;
-        display: inline-block;
-        margin-top: 20px;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    footer {
-        background: #b33c00;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        margin-top: 40px;
-    }
+/* Button click animation */
+button {
+    transition: all 0.3s ease;
+}
+button:active {
+    transform: scale(0.95);
+}
 </style>
-
 </head>
 <body>
 
-<header>
-    Royal Spice Biriyani House
-</header>
+<header>Royal Spice Biriyani House</header>
 
 <nav>
     <a href="#home">Home</a>
@@ -136,45 +226,23 @@
     <a href="#contact">Contact</a>
 </nav>
 
-<div class="hero" id="home">
-    “Taste the Authentic Royal Biriyani”
-</div>
+<div class="hero" id="home">“Taste the Authentic Royal Biriyani”</div>
 
-<!-- MENU WITH BIRIYANI BACKGROUND -->
 <section id="menu">
     <h2>🍽 Order Menu</h2>
-
-    <div class="menu-item">
-        <span>Chicken Biriyani - ₹180</span>
-        <button onclick="addToCart('Chicken Biriyani', 180)">Add</button>
-    </div>
-    <div class="menu-item">
-        <span>Mutton Biriyani - ₹250</span>
-        <button onclick="addToCart('Mutton Biriyani', 250)">Add</button>
-    </div>
-    <div class="menu-item">
-        <span>Veg Biriyani - ₹140</span>
-        <button onclick="addToCart('Veg Biriyani', 140)">Add</button>
-    </div>
-    <div class="menu-item">
-        <span>Egg Biriyani - ₹130</span>
-        <button onclick="addToCart('Egg Biriyani', 130)">Add</button>
-    </div>
-    <div class="menu-item">
-        <span>Chicken 65 - ₹160</span>
-        <button onclick="addToCart('Chicken 65', 160)">Add</button>
-    </div>
-    <div class="menu-item">
-        <span>Butter Chicken - ₹200</span>
-        <button onclick="addToCart('Butter Chicken', 200)">Add</button>
-    </div>
+    <div class="menu-item"><span>Chicken Biriyani - ₹180</span><button onclick="playClick(); addToCart('Chicken Biriyani', 180)">Add</button></div>
+    <div class="menu-item"><span>Mutton Biriyani - ₹250</span><button onclick="playClick(); addToCart('Mutton Biriyani', 250)">Add</button></div>
+    <div class="menu-item"><span>Veg Biriyani - ₹140</span><button onclick="playClick(); addToCart('Veg Biriyani', 140)">Add</button></div>
+    <div class="menu-item"><span>Egg Biriyani - ₹130</span><button onclick="playClick(); addToCart('Egg Biriyani', 130)">Add</button></div>
+    <div class="menu-item"><span>Chicken 65 - ₹160</span><button onclick="playClick(); addToCart('Chicken 65', 160)">Add</button></div>
+    <div class="menu-item"><span>Butter Chicken - ₹200</span><button onclick="playClick(); addToCart('Butter Chicken', 200)">Add</button></div>
 </section>
 
 <section id="cart-section">
     <h2>🛒 Your Cart</h2>
     <div id="cart"></div>
     <h3>Total: ₹<span id="total">0</span></h3>
-    <button class="order-btn" onclick="placeOrder()">Place Order</button>
+    <button class="order-btn" onclick="playClick(); showPaymentPopup()">Pay & Place Order</button>
 </section>
 
 <section id="contact">
@@ -184,79 +252,169 @@
     <p><strong>Working Hours:</strong> 10 AM – 2 PM</p>
 </section>
 
-<footer>
-    © 2025 Royal Spice Biriyani House - All Rights Reserved.
-</footer>
+<footer>© 2025 Royal Spice Biriyani House - All Rights Reserved.</footer>
+
+<!-- Payment Popup -->
+<div id="payment-popup">
+    <h2>Mock Payment</h2>
+    <p>Total: ₹<span id="payment-total">0</span></p>
+    <input type="text" id="card-number" placeholder="Card Number" maxlength="16"><br>
+    <input type="text" id="expiry" placeholder="MM/YY" maxlength="5"><br>
+    <input type="text" id="cvv" placeholder="CVV" maxlength="3"><br>
+    <button onclick="playClick(); processPayment()">Pay Now</button>
+    <button onclick="playClick(); closePaymentPopup()">Cancel</button>
+</div>
+
+<!-- Order Popup -->
+<div id="order-popup">
+    <div class="green-tick">✔️</div>
+    <h2>Your Order Has Been Placed!</h2>
+    <div id="popup-items"></div>
+    <p>Order ID: <span id="order-id"></span></p>
+    <button onclick="playClick(); closePopup()">OK</button>
+    <br><br>
+    <a id="whatsapp-btn" href="#" target="_blank">📲 Track Order on WhatsApp</a>
+    <br><br>
+    <button onclick="playClick(); downloadInvoice()">🧾 Download Invoice (PDF)</button>
+</div>
+
+<div id="confetti-container"></div>
 
 <script>
-    let cart = {};
+// Sound Functions
+function playClick(){ document.getElementById('click-sound').play(); }
+function playSuccess(){ document.getElementById('success-sound').play(); }
 
-    function addToCart(itemName, price) {
-        if (!cart[itemName]) {
-            cart[itemName] = { quantity: 1, price: price };
-        } else {
-            cart[itemName].quantity++;
-        }
-        updateCart();
+// Cart Logic
+let cart = {};
+function addToCart(itemName, price){
+    if(!cart[itemName]) cart[itemName]={quantity:1, price:price};
+    else cart[itemName].quantity++;
+    updateCart();
+}
+function removeItem(itemName){ delete cart[itemName]; updateCart(); }
+function increase(itemName){ cart[itemName].quantity++; updateCart(); }
+function decrease(itemName){ cart[itemName].quantity--; if(cart[itemName].quantity<=0) delete cart[itemName]; updateCart(); }
+
+function updateCart(){
+    let cartDiv=document.getElementById("cart");
+    let totalDiv=document.getElementById("total");
+    cartDiv.innerHTML="";
+    let total=0;
+    for(let item in cart){
+        let entry=cart[item];
+        total+=entry.price*entry.quantity;
+        cartDiv.innerHTML+=`
+        <div class="cart-item">
+            <span>${item} (₹${entry.price})</span>
+            <span>
+                <button onclick="playClick(); decrease('${item}')">-</button>
+                ${entry.quantity}
+                <button onclick="playClick(); increase('${item}')">+</button>
+                <button onclick="playClick(); removeItem('${item}')">Remove</button>
+            </span>
+        </div>`;
+    }
+    totalDiv.innerText=total;
+    document.getElementById("payment-total").innerText=total;
+}
+
+// Payment
+function showPaymentPopup(){
+    if(Object.keys(cart).length===0){ alert("Cart is empty!"); return; }
+    document.getElementById("payment-popup").style.display="block";
+}
+function closePaymentPopup(){ document.getElementById("payment-popup").style.display="none"; }
+function processPayment(){
+    let card=document.getElementById("card-number").value.trim();
+    let exp=document.getElementById("expiry").value.trim();
+    let cvv=document.getElementById("cvv").value.trim();
+    if(card.length!==16 || exp.length!==5 || cvv.length!==3){ alert("Invalid payment info!"); return; }
+    closePaymentPopup();
+    setTimeout(()=>{ placeOrder(); }, 1000);
+}
+
+// Order Placement
+function placeOrder(){
+    playSuccess();
+    let orderId='RSB'+Math.floor(Math.random()*1000000);
+    document.getElementById("order-id").innerText=orderId;
+    let popupItems=document.getElementById("popup-items");
+    popupItems.innerHTML="";
+    for(let item in cart){
+        let entry=cart[item];
+        popupItems.innerHTML+=`<p>${item} × ${entry.quantity} (₹${entry.price*entry.quantity})</p>`;
+    }
+    let whatsappLink=`https://wa.me/?text=Your%20order%20ID%20${orderId}%20has%20been%20placed%20with%20items:%20${encodeURIComponent(Object.keys(cart).map(i=>i+' x'+cart[i].quantity).join(', '))}%20Total:%20₹${document.getElementById("total").innerText}`;
+    document.getElementById("whatsapp-btn").href=whatsappLink;
+    document.getElementById("order-popup").style.display="block";
+    runConfetti();
+}
+
+// Close Popup
+function closePopup(){ document.getElementById("order-popup").style.display="none"; }
+
+// PDF Invoice
+function downloadInvoice(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y=20;
+
+    // Logo
+    doc.setFontSize(22);
+    doc.setTextColor(204,51,0);
+    doc.text("🍛 Royal Spice Biriyani House", 20, y);
+    y+=10;
+
+    // Date & Order ID
+    const orderId=document.getElementById("order-id").innerText;
+    const date=new Date();
+    doc.setFontSize(12);
+    doc.setTextColor(0,0,0);
+    doc.text(`Order ID: ${orderId}`, 20, y);
+    y+=7;
+    doc.text(`Date: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`, 20, y);
+    y+=10;
+
+    doc.text("Items Ordered:", 20, y);
+    y+=7;
+    for(let item in cart){
+        const entry=cart[item];
+        doc.text(`${item} × ${entry.quantity} = ₹${entry.price*entry.quantity}`, 20, y);
+        y+=7;
     }
 
-    function removeItem(itemName) {
-        delete cart[itemName];
-        updateCart();
+    const total=parseInt(document.getElementById("total").innerText);
+    y+=5;
+    doc.setFontSize(14);
+    doc.text(`Total: ₹${total}`, 20, y);
+
+    doc.save(`Invoice_${orderId}.pdf`);
+}
+
+// Confetti Animation
+function runConfetti(){
+    const container=document.getElementById('confetti-container');
+    for(let i=0;i<100;i++){
+        const confetti=document.createElement('div');
+        confetti.style.position='absolute';
+        confetti.style.width='10px';
+        confetti.style.height='10px';
+        confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.left=Math.random()*window.innerWidth+'px';
+        confetti.style.top='-10px';
+        confetti.style.opacity=Math.random();
+        confetti.style.borderRadius='50%';
+        container.appendChild(confetti);
+        const fall=()=>{ 
+            let top=parseFloat(confetti.style.top); 
+            if(top<window.innerHeight){ confetti.style.top=top+5+'px'; requestAnimationFrame(fall); } 
+            else { container.removeChild(confetti); } 
+        };
+        fall();
     }
-
-    function increase(itemName) {
-        cart[itemName].quantity++;
-        updateCart();
-    }
-
-    function decrease(itemName) {
-        cart[itemName].quantity--;
-        if (cart[itemName].quantity <= 0) {
-            delete cart[itemName];
-        }
-        updateCart();
-    }
-
-    function updateCart() {
-        let cartDiv = document.getElementById("cart");
-        let totalDiv = document.getElementById("total");
-        cartDiv.innerHTML = "";
-
-        let total = 0;
-
-        for (let item in cart) {
-            let entry = cart[item];
-            total += entry.price * entry.quantity;
-
-            cartDiv.innerHTML += `
-                <div class="cart-item">
-                    <span>${item} (₹${entry.price})</span>
-                    <span>
-                        <button onclick="decrease('${item}')">-</button>
-                        ${entry.quantity}
-                        <button onclick="increase('${item}')">+</button>
-                        <button onclick="removeItem('${item}')">Remove</button>
-                    </span>
-                </div>
-            `;
-        }
-
-        totalDiv.innerText = total;
-    }
-
-    function placeOrder() {
-        if (Object.keys(cart).length === 0) {
-            alert("Your cart is empty!");
-            return;
-        }
-
-        alert("Your order has been placed successfully! 🎉\nThank you for ordering from Royal Spice Biriyani House.");
-        cart = {};
-        updateCart();
-    }
+}
 </script>
 
 </body>
 </html>
-
