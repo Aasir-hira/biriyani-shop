@@ -13,6 +13,10 @@
 <audio id="success-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
 
 <style>
+/* =======================================
+   CSS Section
+======================================= */
+
 /* Body and General Styles */
 body {
     margin: 0;
@@ -64,7 +68,7 @@ nav a:hover {
     text-align: center;
     padding: 20px;
     color: orange;
-    text-shadow: 0 0 15px orange;
+    text-shadow: 0 0 15px orange; /* Glow effect */
 }
 
 /* Menu Section */
@@ -207,15 +211,15 @@ footer { background: #b33c00; color: white; text-align: center; padding: 20px; m
 }
 
 /* Button click animation */
-button {
-    transition: all 0.3s ease;
-}
-button:active {
-    transform: scale(0.95);
-}
+button { transition: all 0.3s ease; }
+button:active { transform: scale(0.95); }
 </style>
 </head>
 <body>
+
+<!-- =======================================
+   HTML Section
+======================================= -->
 
 <header>Royal Spice Biriyani House</header>
 
@@ -281,6 +285,10 @@ button:active {
 <div id="confetti-container"></div>
 
 <script>
+/* =======================================
+   JavaScript Section
+======================================= */
+
 // Sound Functions
 function playClick(){ document.getElementById('click-sound').play(); }
 function playSuccess(){ document.getElementById('success-sound').play(); }
@@ -359,14 +367,10 @@ function downloadInvoice(){
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     let y=20;
-
-    // Logo
     doc.setFontSize(22);
     doc.setTextColor(204,51,0);
     doc.text("🍛 Royal Spice Biriyani House", 20, y);
     y+=10;
-
-    // Date & Order ID
     const orderId=document.getElementById("order-id").innerText;
     const date=new Date();
     doc.setFontSize(12);
@@ -375,7 +379,6 @@ function downloadInvoice(){
     y+=7;
     doc.text(`Date: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`, 20, y);
     y+=10;
-
     doc.text("Items Ordered:", 20, y);
     y+=7;
     for(let item in cart){
@@ -383,12 +386,10 @@ function downloadInvoice(){
         doc.text(`${item} × ${entry.quantity} = ₹${entry.price*entry.quantity}`, 20, y);
         y+=7;
     }
-
     const total=parseInt(document.getElementById("total").innerText);
     y+=5;
     doc.setFontSize(14);
     doc.text(`Total: ₹${total}`, 20, y);
-
     doc.save(`Invoice_${orderId}.pdf`);
 }
 
