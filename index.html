@@ -5,391 +5,839 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Royal Spice Biriyani House</title>
 
-<!-- jsPDF -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #fff7e6;
-    color: #4a2c2a;
-    overflow-x: hidden;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#fff7e6;
+  color:#4a2c2a;
 }
 
-header {
-    background: #b33c00;
-    padding: 20px;
-    text-align: center;
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
+/* ================= HEADER ================= */
+.main-header{
+  background:linear-gradient(135deg,#b33c00,#8f2e00);
+  padding:18px 30px;
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+}
+.logo{font-size:38px}
+.brand-text h1{
+  margin:0;
+  font-size:26px;
+  font-weight:600;
+  color:#fff;
+}
+.brand-text p{
+  margin:2px 0 0;
+  font-size:13px;
+  color:#ffd9b3;
 }
 
-nav {
-    background: #ffb84d;
-    padding: 12px;
-    text-align: center;
+/* ================= NAV ================= */
+nav{
+  background:#ffb84d;
+  padding:12px;
+  text-align:center;
 }
-nav a {
-    margin: 0 15px;
-    color: #4a2c2a;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    transition: all 0.3s ease;
+nav a{
+  margin:0 15px;
+  color:#4a2c2a;
+  text-decoration:none;
+  font-weight:600;
 }
-nav a:hover {
-    color: #fff;
-    text-shadow: 2px 2px 5px #cc3300;
-    transform: scale(1.1);
+nav a:hover{color:#fff}
+
+/* ================= HERO ================= */
+.hero{
+  height:260px;
+  background:url('https://images.unsplash.com/photo-1608138273246-3c4d475a726a') center/cover;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  color:orange;
+  text-shadow:0 0 15px orange;
+}
+/* SEARCH BAR */
+/* SEARCH BAR – HIGH VISIBILITY */
+.search-box{
+  max-width:420px;
+  margin:30px auto;
 }
 
-.hero {
-    background: url('https://images.unsplash.com/photo-1608138273246-3c4d475a726a') center/cover no-repeat;
-    height: 350px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 36px;
-    font-weight: bold;
-    text-align: center;
-    padding: 20px;
-    color: orange;
-    text-shadow: 0 0 15px orange;
+.search-box input{
+  width:100%;
+  padding:14px 20px;
+  border-radius:30px;
+  border:2px solid #b33c00;
+  outline:none;
+  font-size:15px;
+  background:#ffffff;
+  color:#4a2c2a;
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
 }
 
-#menu {
-    background: url('https://images.unsplash.com/photo-1543353071-087092ec393a') center/cover no-repeat;
-    padding: 40px;
-    position: relative;
-    color: white;
-}
-#menu::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-}
-#menu > * {
-    position: relative;
-    z-index: 2;
+.search-box input::placeholder{
+  color:#888;
 }
 
-.menu-item {
-    background: rgba(255, 224, 179, 0.85);
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #4a2c2a;
+
+
+/* ================= MENU ================= */
+#menu{
+  background:url('https://images.unsplash.com/photo-1543353071-087092ec393a') center/cover;
+  padding:40px;
+  position:relative;
+}
+#menu::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.65);
+}
+#menu>*{position:relative;color:#fff}
+
+.menu-title{
+  margin-top:50px;
+  font-size:24px;
+  font-weight:600;
+  color:#ffd9b3;
+  border-bottom:2px dashed #ffd9b3;
+  padding-bottom:6px;
 }
 
-.menu-item button {
-    background: #cc3300;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+  margin-top:25px;
 }
 
-#cart-section {
-    background: #fff0d6;
-    padding: 40px;
+.menu-item{
+  background:#fff3dc;
+  color:#4a2c2a;
+  padding:18px;
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+.menu-item h3{
+  margin:0;
+  font-size:18px;
+  font-weight:600;
+}
+.menu-item .desc{
+  font-size:13px;
+  opacity:.75;
+  margin:6px 0 12px;
+}
+.menu-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.price{
+  background:#b33c00;
+  color:white;
+  padding:6px 12px;
+  border-radius:20px;
+  font-weight:600;
+  font-size:13px;
 }
 
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    margin: 8px 0;
+/* ================= CART ================= */
+#cart-section{
+  background:#fff0d6;
+  padding:40px;
+}
+#cart{min-height:120px}
+
+.cart-item{
+  display:grid;
+  grid-template-columns:1fr 120px 80px;
+  align-items:center;
+  margin:10px 0;
+  padding-bottom:8px;
+  border-bottom:1px dashed #cc9966;
+}
+.qty-box{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.qty-box button{
+  padding:4px 10px;
+  margin:0 6px;
 }
 
-.order-btn {
-    background: #cc3300;
-    padding: 15px 30px;
-    color: white;
-    font-size: 20px;
-    border-radius: 8px;
-    cursor: pointer;
+button{
+  background:#cc3300;
+  color:#fff;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.order-btn{
+  margin-top:20px;
+  padding:15px 30px;
+  font-size:18px;
 }
 
-footer {
-    background: #b33c00;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
+/* ================= POPUPS ================= */
+.popup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-60%) scale(.9);
+  opacity:0;
+  pointer-events:none;
+  transition:.35s ease;
+  background:#fff;
+  padding:30px;
+  border-radius:15px;
+  width:90%;
+  max-width:420px;
+  box-shadow:0 0 20px rgba(0,0,0,.5);
+  text-align:center;
+  z-index:100;
+}
+.popup.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  pointer-events:auto;
 }
 
-/* POPUPS */
-#order-popup, #payment-popup, #card-popup, #upi-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-    z-index: 100;
-    width: 90%;
-    max-width: 450px;
-    text-align: center;
+/* ================= PROGRESS ================= */
+.progress-container{margin:20px 0}
+.progress-bar{
+  height:6px;
+  width:0%;
+  background:#25a244;
+  border-radius:5px;
+  transition:width .6s ease;
+}
+.progress-steps{
+  display:flex;
+  justify-content:space-between;
+  margin-top:8px;
+  font-size:13px;
+}
+.step{opacity:.4}
+.step.active{opacity:1;color:#25a244;font-weight:600}
+.green-tick{font-size:46px;color:green}
+
+/* ================= CONTACT ================= */
+#contact{
+  background:#fff7e6;
+  padding:40px;
+}
+.contact-box{
+  background:#ffe0b3;
+  padding:25px;
+  border-radius:10px;
+  max-width:600px;
+  margin:auto;
 }
 
-#payment-popup input,
-#card-popup input,
-#upi-popup input {
-    width: 90%;
-    padding: 8px;
-    margin: 5px 0;
+/* ================= FOOTER ================= */
+footer{
+  background:#b33c00;
+  color:#fff;
+  text-align:center;
+  padding:20px;
+}
+/* ================= MOBILE OPTIMISATION ================= */
+@media (max-width: 768px){
+
+  /* HEADER */
+  .brand{
+    flex-direction:column;
+    gap:6px;
+  }
+  .brand-text h1{
+    font-size:22px;
+    text-align:center;
+  }
+  .brand-text p{
+    text-align:center;
+    font-size:12px;
+  }
+
+  /* NAV */
+  nav a{
+    display:inline-block;
+    margin:6px 10px;
+    font-size:15px;
+  }
+
+  /* HERO */
+  .hero{
+    height:200px;
+    font-size:22px;
+    padding:15px;
+    text-align:center;
+  }
+
+  /* SEARCH BAR */
+  .search-box{
+    max-width:100%;
+    padding:0 10px;
+  }
+
+  /* CATEGORY FILTERS */
+  .category-filters{
+    overflow-x:auto;
+    white-space:nowrap;
+    padding-bottom:10px;
+  }
+  .filter-btn{
+    flex:0 0 auto;
+    font-size:13px;
+    padding:7px 14px;
+  }
+
+  /* MENU GRID */
+  .menu-grid{
+    grid-template-columns:1fr;
+  }
+
+  /* CART */
+  .cart-item{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .qty-box{
+    justify-content:flex-start;
+  }
+
+  /* BUTTONS */
+  button, .order-btn{
+    width:100%;
+    font-size:16px;
+  }
+
+  /* POPUPS */
+  .popup{
+    max-width:95%;
+    padding:20px;
+  }
+  .popup input,
+  .popup textarea{
+    width:100%;
+    font-size:16px;
+  }
+}
+.category-filters{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin:20px 0 30px;
+}
+input, textarea{
+  font-size:16px; /* prevents mobile zoom */
+}
+/* ================= DELIVERY POPUP PROFESSIONAL ================= */
+.popup-title{
+  margin:0;
+  font-size:22px;
+  font-weight:600;
+  color:#b33c00;
 }
 
-.green-tick {
-    font-size: 50px;
-    color: green;
+.popup-sub{
+  font-size:13px;
+  color:#777;
+  margin-bottom:20px;
 }
 
-#whatsapp-btn {
-    background: #25d366;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
+.form-group{
+  text-align:left;
+  margin-bottom:15px;
 }
+
+.form-group label{
+  font-size:13px;
+  font-weight:500;
+  display:block;
+  margin-bottom:6px;
+  color:#4a2c2a;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1.5px solid #ccc;
+  font-size:14px;
+  outline:none;
+  transition:.25s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:#b33c00;
+  box-shadow:0 0 0 2px rgba(179,60,0,.15);
+}
+
+.form-group textarea{
+  resize:none;
+  min-height:80px;
+}
+
+.popup-actions{
+  display:flex;
+  gap:12px;
+  margin-top:20px;
+}
+
+.primary-btn{
+  flex:1;
+  background:#cc3300;
+  color:#fff;
+  padding:12px;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:600;
+}
+
+.secondary-btn{
+  flex:1;
+  background:#eee;
+  color:#4a2c2a;
+  padding:12px;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:600;
+}
+
+
 </style>
 </head>
 
 <body>
 
-<header>Royal Spice Biriyani House</header>
+<header class="main-header">
+  <div class="brand">
+    <span class="logo">🍽️</span>
+    <div class="brand-text">
+      <h1>Royal Spice Biriyani House</h1>
+      <p>Authentic South Indian, Chinese & Grill</p>
+    </div>
+  </div>
+</header>
 
 <nav>
-    <a href="#home">Home</a>
-    <a href="#menu">Menu</a>
-    <a href="#cart-section">Cart</a>
-    <a href="#contact">Contact</a>
+<a href="#home">Home</a>
+<a href="#menu">Menu</a>
+<a href="#cart-section">Cart</a>
+<a href="#contact">Contact</a>
 </nav>
 
-<div class="hero" id="home">“Taste the Authentic Royal Biriyani”</div>
+<div class="hero" id="home">Taste the Authentic South Indian Foods</div>
+<!-- SEARCH BAR -->
+<div class="search-box">
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search your favourite food..." 
+    onkeyup="searchMenu()"
+  >
+</div>
+<!-- CATEGORY FILTER BUTTONS -->
+
+
+
+
 
 <section id="menu">
-    <h2>🍽 Order Menu</h2>
-    <div class="menu-item"><span>Chicken Biriyani - ₹180</span><button onclick="addToCart('Chicken Biriyani',180)">Add</button></div>
-    <div class="menu-item"><span>Mutton Biriyani - ₹250</span><button onclick="addToCart('Mutton Biriyani',250)">Add</button></div>
-    <div class="menu-item"><span>Veg Biriyani - ₹140</span><button onclick="addToCart('Veg Biriyani',140)">Add</button></div>
-    <div class="menu-item"><span>Egg Biriyani - ₹130</span><button onclick="addToCart('Egg Biriyani',130)">Add</button></div>
-    <div class="menu-item"><span>Chicken 65 - ₹160</span><button onclick="addToCart('Chicken 65',160)">Add</button></div>
-    <div class="menu-item"><span>Butter Chicken - ₹200</span><button onclick="addToCart('Butter Chicken',200)">Add</button></div>
+<h2>Menu</h2>
+
+<!-- ================= SOUPS ================= -->
+<h3 class="menu-title">Soups</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Tomato Soup</h3><div class="menu-bottom"><span class="price">₹100</span><button onclick="addToCart('Tomato Soup',100)">Add</button></div></div>
+<div class="menu-item"><h3>Sweet Corn Veg Soup</h3><div class="menu-bottom"><span class="price">₹100</span><button onclick="addToCart('Sweet Corn Veg Soup',100)">Add</button></div></div>
+<div class="menu-item"><h3>Hot & Sour Veg Soup</h3><div class="menu-bottom"><span class="price">₹100</span><button onclick="addToCart('Hot & Sour Veg Soup',100)">Add</button></div></div>
+<div class="menu-item"><h3>Veg Mushroom Soup</h3><div class="menu-bottom"><span class="price">₹100</span><button onclick="addToCart('Veg Mushroom Soup',100)">Add</button></div></div>
+
+<div class="menu-item"><h3>Sweet Corn Chicken Soup</h3><div class="menu-bottom"><span class="price">₹115</span><button onclick="addToCart('Sweet Corn Chicken Soup',115)">Add</button></div></div>
+<div class="menu-item"><h3>Chicken Clear Soup</h3><div class="menu-bottom"><span class="price">₹115</span><button onclick="addToCart('Chicken Clear Soup',115)">Add</button></div></div>
+<div class="menu-item"><h3>Hot & Sour Chicken Soup</h3><div class="menu-bottom"><span class="price">₹115</span><button onclick="addToCart('Hot & Sour Chicken Soup',115)">Add</button></div></div>
+<div class="menu-item"><h3>Mutton Bone Soup</h3><div class="menu-bottom"><span class="price">₹130</span><button onclick="addToCart('Mutton Bone Soup',130)">Add</button></div></div>
+</div>
+
+<!-- ================= STARTERS VEG ================= -->
+<h3 class="menu-title">Starters (Veg)</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Gobi 65</h3><div class="menu-bottom"><span class="price">₹160</span><button onclick="addToCart('Gobi 65',160)">Add</button></div></div>
+<div class="menu-item"><h3>Gobi Manchurian</h3><div class="menu-bottom"><span class="price">₹180</span><button onclick="addToCart('Gobi Manchurian',180)">Add</button></div></div>
+<div class="menu-item"><h3>Chilly Gobi</h3><div class="menu-bottom"><span class="price">₹180</span><button onclick="addToCart('Chilly Gobi',180)">Add</button></div></div>
+<div class="menu-item"><h3>Mushroom 65</h3><div class="menu-bottom"><span class="price">₹190</span><button onclick="addToCart('Mushroom 65',190)">Add</button></div></div>
+<div class="menu-item"><h3>Paneer 65</h3><div class="menu-bottom"><span class="price">₹190</span><button onclick="addToCart('Paneer 65',190)">Add</button></div></div>
+<div class="menu-item"><h3>Paneer Tikka</h3><div class="menu-bottom"><span class="price">₹230</span><button onclick="addToCart('Paneer Tikka',230)">Add</button></div></div>
+</div>
+
+<!-- ================= STARTERS NON VEG ================= -->
+<h3 class="menu-title">Starters (Non Veg)</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Chicken 65</h3><div class="menu-bottom"><span class="price">₹170</span><button onclick="addToCart('Chicken 65',170)">Add</button></div></div>
+<div class="menu-item"><h3>Chicken Lollipop (5 pcs)</h3><div class="menu-bottom"><span class="price">₹200</span><button onclick="addToCart('Chicken Lollipop',200)">Add</button></div></div>
+<div class="menu-item"><h3>Chicken Drumstick</h3><div class="menu-bottom"><span class="price">₹220</span><button onclick="addToCart('Chicken Drumstick',220)">Add</button></div></div>
+<div class="menu-item"><h3>Fish Fry (Seasonal)</h3><div class="menu-bottom"><span class="price">₹240</span><button onclick="addToCart('Fish Fry',240)">Add</button></div></div>
+<div class="menu-item"><h3>Mutton Kola</h3><div class="menu-bottom"><span class="price">₹240</span><button onclick="addToCart('Mutton Kola',240)">Add</button></div></div>
+</div>
+
+<!-- ================= BIRIYANI ================= -->
+<h3 class="menu-title">Biriyani</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Chicken Biriyani</h3><div class="menu-bottom"><span class="price">₹190</span><button onclick="addToCart('Chicken Biriyani',190)">Add</button></div></div>
+<div class="menu-item"><h3>Mutton Biriyani</h3><div class="menu-bottom"><span class="price">₹300</span><button onclick="addToCart('Mutton Biriyani',300)">Add</button></div></div>
+<div class="menu-item"><h3>Egg Biriyani</h3><div class="menu-bottom"><span class="price">₹200</span><button onclick="addToCart('Egg Biriyani',200)">Add</button></div></div>
+<div class="menu-item"><h3>Fish Biriyani</h3><div class="menu-bottom"><span class="price">₹300</span><button onclick="addToCart('Fish Biriyani',300)">Add</button></div></div>
+<div class="menu-item"><h3>Plain Biriyani</h3><div class="menu-bottom"><span class="price">₹190</span><button onclick="addToCart('Plain Biriyani',190)">Add</button></div></div>
+</div>
+
+<!-- ================= FRIED RICE ================= -->
+<h3 class="menu-title">Fried Rice</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Veg Fried Rice</h3><div class="menu-bottom"><span class="price">₹120</span><button onclick="addToCart('Veg Fried Rice',120)">Add</button></div></div>
+<div class="menu-item"><h3>Egg Fried Rice</h3><div class="menu-bottom"><span class="price">₹150</span><button onclick="addToCart('Egg Fried Rice',150)">Add</button></div></div>
+<div class="menu-item"><h3>Chicken Fried Rice</h3><div class="menu-bottom"><span class="price">₹180</span><button onclick="addToCart('Chicken Fried Rice',180)">Add</button></div></div>
+<div class="menu-item"><h3>Prawn Fried Rice</h3><div class="menu-bottom"><span class="price">₹200</span><button onclick="addToCart('Prawn Fried Rice',200)">Add</button></div></div>
+</div>
+
+<!-- ================= NOODLES ================= -->
+<h3 class="menu-title">Noodles</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Veg Noodles</h3><div class="menu-bottom"><span class="price">₹120</span><button onclick="addToCart('Veg Noodles',120)">Add</button></div></div>
+<div class="menu-item"><h3>Egg Noodles</h3><div class="menu-bottom"><span class="price">₹150</span><button onclick="addToCart('Egg Noodles',150)">Add</button></div></div>
+<div class="menu-item"><h3>Chicken Noodles</h3><div class="menu-bottom"><span class="price">₹180</span><button onclick="addToCart('Chicken Noodles',180)">Add</button></div></div>
+<div class="menu-item"><h3>Prawn Noodles</h3><div class="menu-bottom"><span class="price">₹200</span><button onclick="addToCart('Prawn Noodles',200)">Add</button></div></div>
+</div>
+
+<!-- ================= SHAWARMA ================= -->
+<h3 class="menu-title">Shawarma</h3>
+<div class="menu-grid">
+<div class="menu-item"><h3>Shawarma Roll</h3><div class="menu-bottom"><span class="price">₹110</span><button onclick="addToCart('Shawarma Roll',110)">Add</button></div></div>
+<div class="menu-item"><h3>Shawarma Plate</h3><div class="menu-bottom"><span class="price">₹200</span><button onclick="addToCart('Shawarma Plate',200)">Add</button></div></div>
+<div class="menu-item"><h3>Paratha Shawarma</h3><div class="menu-bottom"><span class="price">₹125</span><button onclick="addToCart('Paratha Shawarma',125)">Add</button></div></div>
+<div class="menu-item"><h3>Spl Chicken Shawarma</h3><div class="menu-bottom"><span class="price">₹130</span><button onclick="addToCart('Spl Chicken Shawarma',130)">Add</button></div></div>
+</div>
+
 </section>
 
 <section id="cart-section">
-    <h2>🛒 Your Cart</h2>
-    <div id="cart"></div>
-    <h3>Total: ₹<span id="total">0</span></h3>
-    <button class="order-btn" onclick="showPaymentPopup()">Pay & Place Order</button>
+<h2>🛒 Your Cart</h2>
+<div id="cart"><p>Your cart is empty</p></div>
+<h3>Total ₹<span id="total">0</span></h3>
+<button class="order-btn" onclick="showPaymentPopup()">Pay & Place Order</button>
 </section>
 
 <section id="contact">
-    <h2>Contact Us</h2>
-    <p><strong>Address:</strong> Royal Spice Biriyani House, Main Street, Trichy</p>
-    <p><strong>Phone:</strong> +91 98765 43210</p>
-    <p><strong>Working Hours:</strong> 10 AM – 2 PM</p>
+  <h2>📞 Contact Us</h2>
+
+  <div class="contact-box">
+    <p><strong>Royal Spice Biriyani House</strong></p>
+
+    <p>
+      No. 45/2,<br>
+      Main Road,<br>
+      Near Gandhi Market Bus Stop,<br>
+      Woraiyur,<br>
+      Tiruchirappalli – 620003,<br>
+      Tamil Nadu, India.
+    </p>
+
+    <p><strong>📱 Phone:</strong> +91 98765 43210</p>
+    <p><strong>☎️ Alternate:</strong> +91 97890 12345</p>
+
+    <p><strong>📧 Email:</strong> royalspicebiriyani@gmail.com</p>
+
+    <p><strong>🕒 Working Hours:</strong><br>
+      Monday – Sunday : 10:00 AM – 10:30 PM
+    </p>
+
+    <p><strong>🚚 Home Delivery:</strong> Available within Trichy city limits</p>
+  </div>
 </section>
 
-<footer>© 2025 Royal Spice Biriyani House - All Rights Reserved.</footer>
 
-<!-- PAYMENT POPUP -->
-<div id="payment-popup">
-    <h2>Select Payment Method</h2>
-    <p>Total: ₹<span id="payment-total">0</span></p>
+<footer>© 2025 Royal Spice Biriyani House</footer>
 
-    <button onclick="showCardBox()">💳 Card Payment</button>
-    <button onclick="showUPIBox()">📱 UPI Payment</button>
-    <button onclick="processCOD()">💵 Cash on Delivery</button>
+<div class="popup" id="payment">
+  <h3>Select Payment Method</h3>
+  <p>Total ₹<span id="payTotal">0</span></p>
+
+  <button onclick="openCardPopup()">💳 Card Payment</button><br><br>
+  <button onclick="openUPIPopup()">📱 UPI Payment</button><br><br>
+  <button onclick="openCODPopup()">💵 Cash on Delivery</button><br><br>
+
+  <button onclick="closeAll()">Cancel</button>
+</div>
+<div class="popup" id="cardPopup">
+  <h3>Card Payment</h3>
+  <input type="text" id="cardNumber" placeholder="Card Number (16 digits)"><br>
+  <input type="text" id="expiry" placeholder="MM/YY"><br>
+  <input type="text" id="cvv" placeholder="CVV"><br><br>
+  <button onclick="confirmCardPayment()">Pay</button>
+  <button onclick="backToPayment()">Back</button>
+</div>
+<div class="popup" id="upiPopup">
+  <h3>UPI Payment</h3>
+  <input type="text" id="upiId" placeholder="example@upi"><br><br>
+  <button onclick="generateUPIQR()">Generate QR</button>
+
+  <div id="upiQRBox" style="display:none;margin-top:15px;">
+    <img id="upiQR" width="200"><br><br>
+    <button onclick="confirmUPIPayment()">Payment Done</button>
+  </div>
+
+  <button onclick="backToPayment()">Back</button>
+</div>
+<div class="popup" id="codPopup">
+  <h3 class="popup-title">🚚 Delivery Details</h3>
+  <p class="popup-sub">Please enter your delivery information</p>
+
+  <div class="form-group">
+    <label>Full Name</label>
+    <input type="text" id="custName" placeholder="Enter your name">
+  </div>
+
+  <div class="form-group">
+    <label>Mobile Number</label>
+    <input type="text" id="custPhone" placeholder="Enter phone number">
+  </div>
+
+  <div class="form-group">
+    <label>Delivery Address</label>
+    <textarea id="custAddress" placeholder="House no, street, area, city"></textarea>
+  </div>
+
+  <div class="popup-actions">
+    <button class="primary-btn" onclick="confirmCOD()">Place Order</button>
+    <button class="secondary-btn" onclick="backToPayment()">Back</button>
+  </div>
 </div>
 
-<!-- CARD DETAILS BOX -->
-<div id="card-popup">
-    <h3>Card Payment</h3>
-    <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="16"><br>
-    <input type="text" id="expiry" placeholder="Expiry (MM/YY)" maxlength="5"><br>
-    <input type="text" id="cvv" placeholder="CVV (3 digits)" maxlength="3"><br>
-    <button onclick="processCardPayment()">Pay with Card</button>
-    <button onclick="closeCardBox()">Cancel</button>
+
+
+<!-- ORDER CONFIRM -->
+<div class="popup" id="order">
+  <div class="green-tick">✔️</div>
+  <h3>Order Placed!</h3>
+  <div id="orderItems"></div>
+  <button onclick="downloadInvoice()">🧾 Download Invoice</button><br><br>
+  <button onclick="closeAll()">OK</button>
 </div>
 
-<!-- UPI BOX -->
-<div id="upi-popup">
-    <h3>UPI Payment</h3>
-    <input type="text" id="upi-id" placeholder="example@upi">
-    <button onclick="generateUPIQR()">Generate QR</button>
+<!-- ORDER CONFIRM -->
+<div class="popup" id="order">
+  <div class="green-tick">✔️</div>
+  <h3>Order Placed!</h3>
+  <div id="orderItems"></div>
 
-    <div id="upi-qr-section" style="display:none;">
-        <p><strong>Scan & Pay</strong></p>
-        <img id="upi-qr" width="200">
-        <br><br>
-        <button onclick="confirmUPIQR()">Payment Done</button>
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="progress-steps">
+      <span class="step active">Placed</span>
+      <span class="step">Preparing</span>
+      <span class="step">Ready</span>
+      <span class="step">Delivered</span>
     </div>
+  </div>
 
-    <button onclick="closeUPIBox()">Cancel</button>
+  <button onclick="closeAll()">OK</button>
 </div>
 
-<!-- ORDER POPUP -->
-<div id="order-popup">
-    <div class="green-tick">✔️</div>
-    <h2>Your Order Has Been Placed!</h2>
-    <div id="popup-items"></div>
-    <p>Order ID: <span id="order-id"></span></p>
-    <p><strong>Order Status:</strong> <span id="order-status">Placed</span></p>
-    <button onclick="downloadInvoice()">🧾 Download Invoice</button>
-    <br><br>
-    <button onclick="closePopup()">OK</button>
-</div>
 
 <script>
-var cart = {};
+let cart={}, lastOrder={};
 
-function addToCart(itemName, price){
-    if(!cart[itemName]){
-        cart[itemName]={ quantity:1, price:price };
-    } else {
-        cart[itemName].quantity++;
-    }
-    updateCart();
+function addToCart(item,price){
+  cart[item]?cart[item].qty++:cart[item]={price,qty:1};
+  updateCart();
+}
+
+function changeQty(item,val){
+  cart[item].qty+=val;
+  if(cart[item].qty<=0) delete cart[item];
+  updateCart();
 }
 
 function updateCart(){
-    var cartDiv=document.getElementById("cart");
-    var totalDiv=document.getElementById("total");
-    var paymentTotal=document.getElementById("payment-total");
-    cartDiv.innerHTML="";
-    var total=0;
+  const cartDiv=document.getElementById("cart");
+  cartDiv.innerHTML="";
+  let total=0;
 
-    for(var item in cart){
-        var entry=cart[item];
-        total+=entry.price*entry.quantity;
-        cartDiv.innerHTML+=
-        "<div class='cart-item'>" +
-        "<span>"+item+" × "+entry.quantity+"</span>" +
-        "<span>₹"+(entry.price*entry.quantity)+"</span>" +
-        "</div>";
-    }
-    totalDiv.innerText=total;
-    paymentTotal.innerText=total;
+  if(Object.keys(cart).length===0){
+    cartDiv.innerHTML="<p>Your cart is empty</p>";
+    document.getElementById("total").innerText=0;
+    return;
+  }
+
+  Object.entries(cart).forEach(([item,data])=>{
+    total+=data.price*data.qty;
+    cartDiv.innerHTML+=`
+      <div class="cart-item">
+        <span>${item}</span>
+        <div class="qty-box">
+          <button onclick="changeQty('${item}',-1)">−</button>
+          ${data.qty}
+          <button onclick="changeQty('${item}',1)">+</button>
+        </div>
+        <span>₹${data.price*data.qty}</span>
+      </div>`;
+  });
+
+  document.getElementById("total").innerText=total;
 }
 
+function searchMenu(){
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let items = document.querySelectorAll(".menu-item");
+
+  items.forEach(item => {
+    let text = item.innerText.toLowerCase();
+    item.style.display = text.includes(input) ? "flex" : "none";
+  });
+}
 function showPaymentPopup(){
-    if(Object.keys(cart).length===0){
-        alert("Cart is empty!");
-        return;
-    }
-    document.getElementById("payment-popup").style.display="block";
+  if(Object.keys(cart).length === 0){
+    alert("Cart is empty!");
+    return;
+  }
+  document.getElementById("payTotal").innerText =
+    document.getElementById("total").innerText;
+  document.getElementById("payment").classList.add("show");
 }
 
-function closePaymentPopup(){
-    document.getElementById("payment-popup").style.display="none";
+/* PAYMENT MODES */
+let currentOrderId="";
+
+/* OPEN POPUPS */
+function openCardPopup(){
+  closeAll();
+  document.getElementById("cardPopup").classList.add("show");
+}
+function openUPIPopup(){
+  closeAll();
+  document.getElementById("upiPopup").classList.add("show");
+}
+function openCODPopup(){
+  closeAll();
+  document.getElementById("codPopup").classList.add("show");
 }
 
-// CARD PAYMENT FLOW
-function showCardBox(){
-    document.getElementById("payment-popup").style.display="none";
-    document.getElementById("card-popup").style.display="block";
-}
-function closeCardBox(){
-    document.getElementById("card-popup").style.display="none";
-    document.getElementById("payment-popup").style.display="block";
-}
-function processCardPayment(){
-    var card=document.getElementById("card-number").value;
-    var exp=document.getElementById("expiry").value;
-    var cvv=document.getElementById("cvv").value;
-    if(card.length!==16 || exp.length!==5 || cvv.length!==3){
-        alert("Invalid card details!");
-        return;
-    }
-    document.getElementById("card-popup").style.display="none";
-    placeOrder();
+/* BACK */
+function backToPayment(){
+  closeAll();
+  document.getElementById("payment").classList.add("show");
 }
 
-// UPI PAYMENT FLOW
-function showUPIBox(){
-    document.getElementById("payment-popup").style.display="none";
-    document.getElementById("upi-popup").style.display="block";
-    document.getElementById("upi-qr-section").style.display="none";
+/* CARD */
+function confirmCardPayment(){
+  let card=document.getElementById("cardNumber").value;
+  let cvv=document.getElementById("cvv").value;
+  if(card.length!==16 || cvv.length!==3){
+    alert("Invalid card details");
+    return;
+  }
+  placeOrder();
 }
-function closeUPIBox(){
-    document.getElementById("upi-popup").style.display="none";
-    document.getElementById("payment-popup").style.display="block";
-}
+
+/* UPI */
 function generateUPIQR(){
-    var upi=document.getElementById("upi-id").value;
-    if(!upi.includes("@")){
-        alert("Invalid UPI ID!");
-        return;
-    }
-    var amount=document.getElementById("payment-total").innerText;
-    var url="upi://pay?pa="+upi+"&pn=Royal Spice Biriyani House&am="+amount+"&cu=INR";
-    document.getElementById("upi-qr").src=
-        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+encodeURIComponent(url);
-    document.getElementById("upi-qr-section").style.display="block";
+  let upi=document.getElementById("upiId").value;
+  if(!upi.includes("@")){
+    alert("Invalid UPI ID");
+    return;
+  }
+  let amount=document.getElementById("total").innerText;
+  let url=`upi://pay?pa=${upi}&pn=Royal Spice Biriyani House&am=${amount}&cu=INR`;
+  document.getElementById("upiQR").src =
+    "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+
+    encodeURIComponent(url);
+  document.getElementById("upiQRBox").style.display="block";
 }
-function confirmUPIQR(){
-    document.getElementById("upi-popup").style.display="none";
-    placeOrder();
-}
-
-// COD
-function processCOD(){
-    document.getElementById("payment-popup").style.display="none";
-    placeOrder();
+function confirmUPIPayment(){
+  placeOrder();
 }
 
-// ORDER PROCESS
+/* COD */
+function confirmCOD(){
+  let phone=document.getElementById("custPhone").value;
+  let addr=document.getElementById("custAddress").value;
+  if(phone.length<10 || addr===""){
+    alert("Enter valid details");
+    return;
+  }
+  placeOrder();
+}
+
+/* ORDER */
 function placeOrder(){
-    var orderId="RSB"+Math.floor(Math.random()*1000000);
-    document.getElementById("order-id").innerText=orderId;
+  closeAll();
 
-    var items=document.getElementById("popup-items");
-    items.innerHTML="";
-    for(var item in cart){
-        items.innerHTML+="<p>"+item+" × "+cart[item].quantity+"</p>";
-    }
-    document.getElementById("order-popup").style.display="block";
-    startOrderStatus();
+  currentOrderId = "RSB" + Math.floor(100000 + Math.random() * 900000);
+
+  let items = document.getElementById("orderItems");
+  items.innerHTML = `<p><strong>Order ID:</strong> ${currentOrderId}</p>`;
+
+  for(let item in cart){
+    items.innerHTML += `<p>${item} × ${cart[item].qty}</p>`;
+  }
+
+  document.getElementById("order").classList.add("show");
+
+  /* ✅ CLEAR CART AFTER ORDER */
+  cart = {};
+  updateCart();
 }
 
-function startOrderStatus(){
-    var status=document.getElementById("order-status");
-    status.innerText="Placed";
-    setTimeout(function(){ status.innerText="Preparing"; },3000);
-    setTimeout(function(){ status.innerText="Ready"; },6000);
-    setTimeout(function(){ status.innerText="Delivered"; },9000);
+
+/* CLOSE */
+function closeAll(){
+  document.querySelectorAll(".popup").forEach(p=>p.classList.remove("show"));
 }
 
-function closePopup(){
-    document.getElementById("order-popup").style.display="none";
-    cart={};
-    updateCart();
-}
-
-// INVOICE
 function downloadInvoice(){
-    var doc=new jspdf.jsPDF();
-    var y=20;
-    doc.text("Royal Spice Biriyani House",20,y);
-    y+=10;
-    for(var item in cart){
-        doc.text(item+" x "+cart[item].quantity,20,y);
-        y+=8;
-    }
-    doc.text("Total ₹"+document.getElementById("total").innerText,20,y+10);
-    doc.save("Invoice.pdf");
+  const { jsPDF }=window.jspdf;
+  let doc=new jsPDF();
+  let y=20;
+
+  doc.text("Royal Spice Biriyani House",20,y); y+=10;
+  doc.text(`Order ID: ${currentOrderId}`,20,y); y+=10;
+
+  for(let i in cart){
+    doc.text(`${i} x ${cart[i].qty}`,20,y);
+    y+=8;
+  }
+
+  doc.text(`Total ₹${document.getElementById("total").innerText}`,20,y+5);
+  doc.save(`Invoice_${currentOrderId}.pdf`);
 }
+
+
+function confirmUPIPayment(){
+  placeOrder();
+}
+
+
+
+
 </script>
 
 </body>
