@@ -5,14 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Royal Spice Biriyani House</title>
 
-<!-- jsPDF for Invoice -->
+<!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
-/* =======================================
-   CSS Section (UNCHANGED FROM YOUR CODE)
-======================================= */
-
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -75,7 +71,10 @@ nav a:hover {
     inset: 0;
     background: rgba(0, 0, 0, 0.55);
 }
-#menu > * { position: relative; z-index: 2; }
+#menu > * {
+    position: relative;
+    z-index: 2;
+}
 
 .menu-item {
     background: rgba(255, 224, 179, 0.85);
@@ -126,7 +125,7 @@ footer {
 }
 
 /* POPUPS */
-#order-popup, #payment-popup {
+#order-popup, #payment-popup, #card-popup, #upi-popup {
     display: none;
     position: fixed;
     top: 50%;
@@ -142,7 +141,9 @@ footer {
     text-align: center;
 }
 
-#payment-popup input {
+#payment-popup input,
+#card-popup input,
+#upi-popup input {
     width: 90%;
     padding: 8px;
     margin: 5px 0;
@@ -159,12 +160,6 @@ footer {
     padding: 10px 15px;
     border-radius: 5px;
     text-decoration: none;
-}
-
-#confetti-container {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
 }
 </style>
 </head>
@@ -184,19 +179,19 @@ footer {
 
 <section id="menu">
     <h2>🍽 Order Menu</h2>
-    <div class="menu-item"><span>Chicken Biriyani - ₹180</span><button onclick="playClick(); addToCart('Chicken Biriyani', 180)">Add</button></div>
-    <div class="menu-item"><span>Mutton Biriyani - ₹250</span><button onclick="playClick(); addToCart('Mutton Biriyani', 250)">Add</button></div>
-    <div class="menu-item"><span>Veg Biriyani - ₹140</span><button onclick="playClick(); addToCart('Veg Biriyani', 140)">Add</button></div>
-    <div class="menu-item"><span>Egg Biriyani - ₹130</span><button onclick="playClick(); addToCart('Egg Biriyani', 130)">Add</button></div>
-    <div class="menu-item"><span>Chicken 65 - ₹160</span><button onclick="playClick(); addToCart('Chicken 65', 160)">Add</button></div>
-    <div class="menu-item"><span>Butter Chicken - ₹200</span><button onclick="playClick(); addToCart('Butter Chicken', 200)">Add</button></div>
+    <div class="menu-item"><span>Chicken Biriyani - ₹180</span><button onclick="addToCart('Chicken Biriyani',180)">Add</button></div>
+    <div class="menu-item"><span>Mutton Biriyani - ₹250</span><button onclick="addToCart('Mutton Biriyani',250)">Add</button></div>
+    <div class="menu-item"><span>Veg Biriyani - ₹140</span><button onclick="addToCart('Veg Biriyani',140)">Add</button></div>
+    <div class="menu-item"><span>Egg Biriyani - ₹130</span><button onclick="addToCart('Egg Biriyani',130)">Add</button></div>
+    <div class="menu-item"><span>Chicken 65 - ₹160</span><button onclick="addToCart('Chicken 65',160)">Add</button></div>
+    <div class="menu-item"><span>Butter Chicken - ₹200</span><button onclick="addToCart('Butter Chicken',200)">Add</button></div>
 </section>
 
 <section id="cart-section">
     <h2>🛒 Your Cart</h2>
     <div id="cart"></div>
     <h3>Total: ₹<span id="total">0</span></h3>
-    <button class="order-btn" onclick="playClick(); showPaymentPopup()">Pay & Place Order</button>
+    <button class="order-btn" onclick="showPaymentPopup()">Pay & Place Order</button>
 </section>
 
 <section id="contact">
@@ -213,32 +208,35 @@ footer {
     <h2>Select Payment Method</h2>
     <p>Total: ₹<span id="payment-total">0</span></p>
 
-    <h3>💳 Card Payment</h3>
-    <input type="text" id="card-number" placeholder="Card Number" maxlength="16">
-    <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
-    <input type="text" id="cvv" placeholder="CVV" maxlength="3">
-    <button onclick="playClick(); processCardPayment()">Pay by Card</button>
+    <button onclick="showCardBox()">💳 Card Payment</button>
+    <button onclick="showUPIBox()">📱 UPI Payment</button>
+    <button onclick="processCOD()">💵 Cash on Delivery</button>
+</div>
 
-    <hr>
+<!-- CARD DETAILS BOX -->
+<div id="card-popup">
+    <h3>Card Payment</h3>
+    <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="16"><br>
+    <input type="text" id="expiry" placeholder="Expiry (MM/YY)" maxlength="5"><br>
+    <input type="text" id="cvv" placeholder="CVV (3 digits)" maxlength="3"><br>
+    <button onclick="processCardPayment()">Pay with Card</button>
+    <button onclick="closeCardBox()">Cancel</button>
+</div>
 
-    <h3>📱 UPI Payment</h3>
+<!-- UPI BOX -->
+<div id="upi-popup">
+    <h3>UPI Payment</h3>
     <input type="text" id="upi-id" placeholder="example@upi">
-    <button onclick="playClick(); processUPI()">Generate UPI QR</button>
+    <button onclick="generateUPIQR()">Generate QR</button>
 
-    <div id="upi-qr-section" style="display:none; margin-top:15px;">
+    <div id="upi-qr-section" style="display:none;">
         <p><strong>Scan & Pay</strong></p>
         <img id="upi-qr" width="200">
         <br><br>
-        <button onclick="playClick(); confirmUPIQR()">Payment Done</button>
+        <button onclick="confirmUPIQR()">Payment Done</button>
     </div>
 
-    <hr>
-
-    <h3>💵 Cash on Delivery</h3>
-    <button onclick="playClick(); processCOD()">Place Order (COD)</button>
-
-    <br><br>
-    <button onclick="playClick(); closePaymentPopup()">Cancel</button>
+    <button onclick="closeUPIBox()">Cancel</button>
 </div>
 
 <!-- ORDER POPUP -->
@@ -248,116 +246,129 @@ footer {
     <div id="popup-items"></div>
     <p>Order ID: <span id="order-id"></span></p>
     <p><strong>Order Status:</strong> <span id="order-status">Placed</span></p>
-    <a id="whatsapp-btn" href="#" target="_blank">📲 Track Order on WhatsApp</a>
+    <button onclick="downloadInvoice()">🧾 Download Invoice</button>
     <br><br>
-    <button onclick="playClick(); downloadInvoice()">🧾 Download Invoice</button>
-    <br><br>
-    <button onclick="playClick(); closePopup()">OK</button>
+    <button onclick="closePopup()">OK</button>
 </div>
 
-<div id="confetti-container"></div>
-
 <script>
-/* =======================================
-   JavaScript Section (OLD + ADDED)
-======================================= */
-
-function playClick(){ document.getElementById('click-sound').play(); }
-function playSuccess(){ document.getElementById('success-sound').play(); }
-
-let cart = {};
+var cart = {};
 
 function addToCart(itemName, price){
-    if(!cart[itemName]) cart[itemName]={quantity:1, price:price};
-    else cart[itemName].quantity++;
+    if(!cart[itemName]){
+        cart[itemName]={ quantity:1, price:price };
+    } else {
+        cart[itemName].quantity++;
+    }
     updateCart();
 }
 
 function updateCart(){
-    let cartDiv=document.getElementById("cart");
-    let totalDiv=document.getElementById("total");
+    var cartDiv=document.getElementById("cart");
+    var totalDiv=document.getElementById("total");
+    var paymentTotal=document.getElementById("payment-total");
     cartDiv.innerHTML="";
-    let total=0;
-    for(let item in cart){
-        let entry=cart[item];
+    var total=0;
+
+    for(var item in cart){
+        var entry=cart[item];
         total+=entry.price*entry.quantity;
-        cartDiv.innerHTML+=`
-        <div class="cart-item">
-            <span>${item} × ${entry.quantity}</span>
-            <span>₹${entry.price*entry.quantity}</span>
-        </div>`;
+        cartDiv.innerHTML+=
+        "<div class='cart-item'>" +
+        "<span>"+item+" × "+entry.quantity+"</span>" +
+        "<span>₹"+(entry.price*entry.quantity)+"</span>" +
+        "</div>";
     }
     totalDiv.innerText=total;
-    document.getElementById("payment-total").innerText=total;
+    paymentTotal.innerText=total;
 }
 
 function showPaymentPopup(){
-    if(Object.keys(cart).length===0){ alert("Cart is empty!"); return; }
+    if(Object.keys(cart).length===0){
+        alert("Cart is empty!");
+        return;
+    }
     document.getElementById("payment-popup").style.display="block";
 }
+
 function closePaymentPopup(){
     document.getElementById("payment-popup").style.display="none";
 }
 
-/* CARD PAYMENT */
+// CARD PAYMENT FLOW
+function showCardBox(){
+    document.getElementById("payment-popup").style.display="none";
+    document.getElementById("card-popup").style.display="block";
+}
+function closeCardBox(){
+    document.getElementById("card-popup").style.display="none";
+    document.getElementById("payment-popup").style.display="block";
+}
 function processCardPayment(){
-    let card=document.getElementById("card-number").value.trim();
-    let exp=document.getElementById("expiry").value.trim();
-    let cvv=document.getElementById("cvv").value.trim();
+    var card=document.getElementById("card-number").value;
+    var exp=document.getElementById("expiry").value;
+    var cvv=document.getElementById("cvv").value;
     if(card.length!==16 || exp.length!==5 || cvv.length!==3){
         alert("Invalid card details!");
         return;
     }
-    closePaymentPopup();
-    setTimeout(()=>{ placeOrder(); },1000);
+    document.getElementById("card-popup").style.display="none";
+    placeOrder();
 }
 
-/* UPI PAYMENT WITH QR */
-function processUPI(){
-    let upi=document.getElementById("upi-id").value.trim();
-    if(!upi || !upi.includes("@")){
+// UPI PAYMENT FLOW
+function showUPIBox(){
+    document.getElementById("payment-popup").style.display="none";
+    document.getElementById("upi-popup").style.display="block";
+    document.getElementById("upi-qr-section").style.display="none";
+}
+function closeUPIBox(){
+    document.getElementById("upi-popup").style.display="none";
+    document.getElementById("payment-popup").style.display="block";
+}
+function generateUPIQR(){
+    var upi=document.getElementById("upi-id").value;
+    if(!upi.includes("@")){
         alert("Invalid UPI ID!");
         return;
     }
-    let amount=document.getElementById("payment-total").innerText;
-    let upiURL=`upi://pay?pa=${upi}&pn=Royal Spice Biriyani House&am=${amount}&cu=INR`;
-    let qrURL=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiURL)}`;
-    document.getElementById("upi-qr").src=qrURL;
+    var amount=document.getElementById("payment-total").innerText;
+    var url="upi://pay?pa="+upi+"&pn=Royal Spice Biriyani House&am="+amount+"&cu=INR";
+    document.getElementById("upi-qr").src=
+        "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data="+encodeURIComponent(url);
     document.getElementById("upi-qr-section").style.display="block";
 }
-
 function confirmUPIQR(){
-    closePaymentPopup();
-    setTimeout(()=>{ placeOrder(); },1000);
+    document.getElementById("upi-popup").style.display="none";
+    placeOrder();
 }
 
-/* CASH ON DELIVERY */
+// COD
 function processCOD(){
-    closePaymentPopup();
-    setTimeout(()=>{ placeOrder(); },500);
+    document.getElementById("payment-popup").style.display="none";
+    placeOrder();
 }
 
-/* ORDER */
+// ORDER PROCESS
 function placeOrder(){
-    playSuccess();
-    let orderId='RSB'+Math.floor(Math.random()*1000000);
+    var orderId="RSB"+Math.floor(Math.random()*1000000);
     document.getElementById("order-id").innerText=orderId;
-    let popupItems=document.getElementById("popup-items");
-    popupItems.innerHTML="";
-    for(let item in cart){
-        popupItems.innerHTML+=`<p>${item} × ${cart[item].quantity}</p>`;
+
+    var items=document.getElementById("popup-items");
+    items.innerHTML="";
+    for(var item in cart){
+        items.innerHTML+="<p>"+item+" × "+cart[item].quantity+"</p>";
     }
     document.getElementById("order-popup").style.display="block";
     startOrderStatus();
 }
 
-/* ORDER STATUS */
 function startOrderStatus(){
-    const status=document.getElementById("order-status");
+    var status=document.getElementById("order-status");
     status.innerText="Placed";
-    setTimeout(()=>{ status.innerText="Preparing"; },3000);
-    setTimeout(()=>{ status.innerText="Ready"; },6000);
-    setTimeout(()=>{ status.innerText="Delivered"; },9000);
+    setTimeout(function(){ status.innerText="Preparing"; },3000);
+    setTimeout(function(){ status.innerText="Ready"; },6000);
+    setTimeout(function(){ status.innerText="Delivered"; },9000);
 }
 
 function closePopup(){
@@ -366,22 +377,20 @@ function closePopup(){
     updateCart();
 }
 
-/* INVOICE */
+// INVOICE
 function downloadInvoice(){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    let y=20;
+    var doc=new jspdf.jsPDF();
+    var y=20;
     doc.text("Royal Spice Biriyani House",20,y);
     y+=10;
-    for(let item in cart){
-        doc.text(`${item} x ${cart[item].quantity}`,20,y);
+    for(var item in cart){
+        doc.text(item+" x "+cart[item].quantity,20,y);
         y+=8;
     }
-    doc.text(`Total ₹${document.getElementById("total").innerText}`,20,y+5);
+    doc.text("Total ₹"+document.getElementById("total").innerText,20,y+10);
     doc.save("Invoice.pdf");
 }
 </script>
 
 </body>
 </html>
-
