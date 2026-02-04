@@ -87,8 +87,10 @@ nav a:hover{color:#fff}
 }
 
 .search-box input::placeholder{
-  color:#888;
+  color:#9aa4af;
+  font-weight:500;
 }
+
 
 
 
@@ -208,10 +210,12 @@ button{
   padding:30px;
   border-radius:15px;
   width:90%;
-  max-width:420px;
+  max-width:360px;
   box-shadow:0 0 20px rgba(0,0,0,.5);
   text-align:center;
   z-index:100;
+  overflow:hidden;
+
 }
 .popup.show{
   opacity:1;
@@ -323,10 +327,25 @@ footer{
   }
 
   /* BUTTONS */
-  button, .order-btn{
+  .order-btn{
     width:100%;
     font-size:16px;
   }
+  button{
+  background:linear-gradient(135deg,#ff6a00,#ff3c00);
+  padding:10px 18px;
+  border-radius:10px;
+  font-weight:600;
+
+  box-shadow:0 6px 14px rgba(255,90,0,.25);
+  transition:.2s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(255,90,0,.35);
+}
+
 
   /* POPUPS */
   .popup{
@@ -345,9 +364,42 @@ footer{
   gap:12px;
   margin:20px 0 30px;
 }
+/* ===== PREMIUM INPUT STYLE ===== */
+
 input, textarea{
-  font-size:16px; /* prevents mobile zoom */
+  width:100%;
+  padding:14px 18px;
+
+  border-radius:14px;
+  border:2px solid transparent;
+
+  background:#f4f6f8;
+  font-size:15px;
+  color:#333;
+
+  box-shadow:
+      0 4px 10px rgba(0,0,0,.05),
+      inset 0 1px 2px rgba(0,0,0,.04);
+
+  outline:none;
+  transition:all .25s ease;
 }
+
+/* FOCUS EFFECT */
+
+input:focus, textarea:focus{
+
+  background:#ffffff;
+  border-color:#ff7a00;
+
+  box-shadow:
+      0 0 0 4px rgba(255,122,0,.12),
+      0 10px 18px rgba(0,0,0,.08);
+
+  transform:translateY(-2px);
+}
+ /* prevents mobile zoom */
+
 /* ================= DELIVERY POPUP PROFESSIONAL ================= */
 .popup-title{
   margin:0;
@@ -375,22 +427,34 @@ input, textarea{
   color:#4a2c2a;
 }
 
-.form-group input,
-.form-group textarea{
+.dual-input input{
   width:100%;
-  padding:12px 14px;
-  border-radius:10px;
-  border:1.5px solid #ccc;
-  font-size:14px;
+  padding:14px 16px;
+  border-radius:12px;
+  border:2px solid transparent;
+  font-size:15px;
   outline:none;
-  transition:.25s;
+
+  background:#f7f7f7;        /* soft background */
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+
+  transition:all .25s ease;
 }
 
+
 .form-group input:focus,
-.form-group textarea:focus{
-  border-color:#b33c00;
-  box-shadow:0 0 0 2px rgba(179,60,0,.15);
+.dual-input input:focus{
+
+  background:#fff;
+  border-color:#ff7a00;
+
+  box-shadow:
+      0 0 0 4px rgba(255,122,0,.12),
+      0 4px 12px rgba(0,0,0,.08);
+
+  transform:translateY(-1px);
 }
+
 
 .form-group textarea{
   resize:none;
@@ -422,6 +486,83 @@ input, textarea{
   font-size:15px;
   font-weight:600;
 }
+/* ===== PRO CARD PAYMENT ===== */
+
+.payment-card{
+  max-width:380px;
+}
+
+.pay-title{
+  margin:0;
+  color:#b33c00;
+}
+
+.pay-sub{
+  font-size:13px;
+  color:#777;
+  margin-bottom:18px;
+}
+
+/* CARD PREVIEW */
+
+.card-preview{
+  background:linear-gradient(135deg,#b33c00,#ff7a00);
+  color:white;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.chip{
+  width:40px;
+  height:28px;
+  background:gold;
+  border-radius:6px;
+  margin-bottom:15px;
+}
+
+#previewNumber{
+  letter-spacing:2px;
+  font-size:18px;
+  margin-bottom:14px;
+}
+
+.card-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+}
+
+/* INPUT LAYOUT */
+
+/* INPUT LAYOUT — FIXED */
+
+.dual-input{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:12px;
+  width:100%;
+}
+
+.dual-input div{
+  width:100%;
+}
+
+.dual-input input{
+  width:100%;
+  max-width:100%;
+}
+
+
+input{
+  transition:.25s;
+}
+
+input:focus{
+  border-color:#ff7a00;
+  box-shadow:0 0 0 3px rgba(255,122,0,.15);
+}
 
 
 </style>
@@ -431,7 +572,7 @@ input, textarea{
 
 <header class="main-header">
   <div class="brand">
-    <span class="logo">🍽️</span>
+    <span class="logo"></span>
     <div class="brand-text">
       <h1>Royal Spice Biriyani House</h1>
       <p>Authentic South Indian, Chinese & Grill</p>
@@ -585,16 +726,62 @@ input, textarea{
   <button onclick="openUPIPopup()">📱 UPI Payment</button><br><br>
   <button onclick="openCODPopup()">💵 Cash on Delivery</button><br><br>
 
-  <button onclick="closeAll()">Cancel</button>
+  <button onclick="resetEntireOrder(); closeAll()">Cancel</button>
+
+
 </div>
-<div class="popup" id="cardPopup">
-  <h3>Card Payment</h3>
-  <input type="text" id="cardNumber" placeholder="Card Number (16 digits)"><br>
-  <input type="text" id="expiry" placeholder="MM/YY"><br>
-  <input type="text" id="cvv" placeholder="CVV"><br><br>
-  <button onclick="confirmCardPayment()">Pay</button>
-  <button onclick="backToPayment()">Back</button>
+<div class="popup payment-card" id="cardPopup">
+
+  <h2 class="pay-title">💳 Secure Card Payment</h2>
+  <p class="pay-sub">All transactions are encrypted</p>
+
+  <div class="card-preview">
+      <div class="chip"></div>
+      <div id="previewNumber">•••• •••• •••• ••••</div>
+      <div class="card-row">
+          <span id="previewName">YOUR NAME</span>
+          <span id="previewExpiry">MM/YY</span>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label>Card Number</label>
+      <input 
+        type="text" 
+        id="cardNumber"
+        maxlength="16"
+        placeholder="1234 5678 9012 3456"
+        oninput="updateCardPreview()">
+  </div>
+
+  <div class="dual-input">
+      <div>
+        <label>Expiry</label>
+        <input 
+          type="text" 
+          id="expiry"
+          maxlength="5"
+          placeholder="MM/YY"
+          oninput="updateCardPreview()">
+      </div>
+
+      <div>
+        <label>CVV</label>
+        <input 
+          type="password" 
+          id="cvv"
+          maxlength="3"
+          placeholder="•••">
+      </div>
+  </div>
+
+  <div class="popup-actions">
+      <button class="primary-btn" onclick="confirmCardPayment()">Pay Securely</button>
+      <button class="secondary-btn" onclick="backToPayment()">Cancel</button>
+  </div>
+
 </div>
+
 <div class="popup" id="upiPopup">
   <h3>UPI Payment</h3>
   <input type="text" id="upiId" placeholder="example@upi"><br><br>
@@ -632,17 +819,6 @@ input, textarea{
   </div>
 </div>
 
-
-
-<!-- ORDER CONFIRM -->
-<div class="popup" id="order">
-  <div class="green-tick">✔️</div>
-  <h3>Order Placed!</h3>
-  <div id="orderItems"></div>
-  <button onclick="downloadInvoice()">🧾 Download Invoice</button><br><br>
-  <button onclick="closeAll()">OK</button>
-</div>
-
 <!-- ORDER CONFIRM -->
 <div class="popup" id="order">
   <div class="green-tick">✔️</div>
@@ -658,7 +834,8 @@ input, textarea{
       <span class="step">Delivered</span>
     </div>
   </div>
-
+  <button onclick="downloadInvoice()">🧾 Download Invoice</button>
+<br><br>
   <button onclick="closeAll()">OK</button>
 </div>
 
@@ -743,6 +920,7 @@ function openCODPopup(){
 
 /* BACK */
 function backToPayment(){
+   clearPaymentForms();
   closeAll();
   document.getElementById("payment").classList.add("show");
 }
@@ -793,16 +971,26 @@ function placeOrder(){
 
   currentOrderId = "RSB" + Math.floor(100000 + Math.random() * 900000);
 
+  // ✅ STORE ORDER BEFORE CLEARING
+  lastOrder = JSON.parse(JSON.stringify(cart));
+
   let items = document.getElementById("orderItems");
   items.innerHTML = `<p><strong>Order ID:</strong> ${currentOrderId}</p>`;
 
-  for(let item in cart){
-    items.innerHTML += `<p>${item} × ${cart[item].qty}</p>`;
+  let total = 0;
+
+  for(let item in lastOrder){
+    items.innerHTML += `<p>${item} × ${lastOrder[item].qty}</p>`;
+    total += lastOrder[item].price * lastOrder[item].qty;
   }
 
-  document.getElementById("order").classList.add("show");
+  items.innerHTML += `<p><strong>Total: ₹${total}</strong></p>`;
 
-  /* ✅ CLEAR CART AFTER ORDER */
+  document.getElementById("order").classList.add("show");
+  startOrderTracking();
+
+
+  // ✅ CLEAR CART AFTER COPYING
   cart = {};
   updateCart();
 }
@@ -814,26 +1002,179 @@ function closeAll(){
 }
 
 function downloadInvoice(){
-  const { jsPDF }=window.jspdf;
-  let doc=new jsPDF();
-  let y=20;
+  
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
 
-  doc.text("Royal Spice Biriyani House",20,y); y+=10;
-  doc.text(`Order ID: ${currentOrderId}`,20,y); y+=10;
+  let y = 20;
+  let total = 0;
 
-  for(let i in cart){
-    doc.text(`${i} x ${cart[i].qty}`,20,y);
+  // ⭐ HEADER
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(20);
+  doc.text("Royal Spice Biriyani House", 105, y, null, null, "center");
+
+  y+=8;
+
+  doc.setFontSize(10);
+  doc.setFont("helvetica","normal");
+  doc.text("Trichy | Ph: +91 98765 43210",105,y,null,null,"center");
+
+  y+=10;
+
+  // divider
+  doc.line(20,y,190,y);
+
+  y+=10;
+
+  // ⭐ ORDER INFO
+  doc.setFontSize(12);
+  doc.text(`Order ID: ${currentOrderId}`,20,y);
+
+  let date = new Date().toLocaleString();
+  doc.text(`Date: ${date}`,140,y);
+
+  y+=10;
+
+  // divider
+  doc.line(20,y,190,y);
+
+  y+=8;
+
+  // ⭐ TABLE HEADER
+  doc.setFont("helvetica","bold");
+
+  doc.text("Item",20,y);
+  doc.text("Qty",120,y);
+  doc.text("Price",160,y);
+
+  y+=4;
+  doc.line(20,y,190,y);
+
+  y+=8;
+
+  doc.setFont("helvetica","normal");
+
+  // ⭐ ITEMS
+  for(let item in lastOrder){
+
+    let qty = lastOrder[item].qty;
+    let price = lastOrder[item].price * qty;
+
+    total += price;
+
+    doc.text(item,20,y);
+    doc.text(String(qty),125,y);
+    doc.text("₹"+price,160,y);
+
     y+=8;
   }
 
-  doc.text(`Total ₹${document.getElementById("total").innerText}`,20,y+5);
+  y+=5;
+  doc.line(20,y,190,y);
+
+  y+=10;
+
+  // ⭐ TOTAL
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(14);
+
+  doc.text(`Total: ₹${total}`,150,y);
+
+  y+=15;
+
+  // ⭐ FOOTER
+  doc.setFontSize(11);
+  doc.setFont("helvetica","normal");
+
+  doc.text("Thank you for dining with us!",105,y,null,null,"center");
+  y+=6;
+  doc.text("Visit Again ",105,y,null,null,"center");
+
   doc.save(`Invoice_${currentOrderId}.pdf`);
 }
+
+
 
 
 function confirmUPIPayment(){
   placeOrder();
 }
+function updateCardPreview(){
+
+  let number = document.getElementById("cardNumber").value;
+  let expiry = document.getElementById("expiry").value;
+
+  // format card number
+  number = number.replace(/\D/g,'')
+                 .replace(/(.{4})/g,'$1 ')
+                 .trim();
+
+  document.getElementById("previewNumber").innerText =
+      number || "•••• •••• •••• ••••";
+
+  document.getElementById("previewExpiry").innerText =
+      expiry || "MM/YY";
+}
+function startOrderTracking(){
+
+  const steps = document.querySelectorAll(".step");
+  const bar = document.getElementById("progressBar");
+
+  // reset first
+  steps.forEach(step => step.classList.remove("active"));
+  steps[0].classList.add("active");
+  bar.style.width = "25%";
+
+  setTimeout(()=>{
+    steps[1].classList.add("active");
+    bar.style.width = "50%";
+  },3000); // 3 seconds
+
+  setTimeout(()=>{
+    steps[2].classList.add("active");
+    bar.style.width = "75%";
+  },6000); // 6 seconds
+
+  setTimeout(()=>{
+    steps[3].classList.add("active");
+    bar.style.width = "100%";
+  },9000); // 9 seconds
+}
+function clearPaymentForms(){
+
+  // CARD
+  document.getElementById("cardNumber").value="";
+  document.getElementById("expiry").value="";
+  document.getElementById("cvv").value="";
+
+  // reset card preview
+  document.getElementById("previewNumber").innerText="•••• •••• •••• ••••";
+  document.getElementById("previewExpiry").innerText="MM/YY";
+
+  // UPI
+  document.getElementById("upiId").value="";
+  document.getElementById("upiQRBox").style.display="none";
+
+  // COD
+  document.getElementById("custName").value="";
+  document.getElementById("custPhone").value="";
+  document.getElementById("custAddress").value="";
+}
+function resetEntireOrder(){
+
+  // ✅ clear cart
+  cart = {};
+  updateCart();
+
+  // ✅ clear saved order
+  lastOrder = {};
+
+  // ✅ clear payment inputs
+  clearPaymentForms();
+}
+
+
 
 
 
