@@ -54,6 +54,15 @@ nav a{
   text-decoration:none;
   font-weight:600;
 }
+
+/* VERY IMPORTANT — add this */
+nav a:visited{
+  color:#4a2c2a;
+}
+
+nav a:active{
+  color:#4a2c2a;
+}
 nav a:hover{color:#fff}
 
 /* ================= HERO ================= */
@@ -585,6 +594,8 @@ input:focus{
 <a href="#menu">Menu</a>
 <a href="#cart-section">Cart</a>
 <a href="#contact">Contact</a>
+<a href="login.html">Admin</a>
+</a>
 </nav>
 
 <div class="hero" id="home">Taste the Authentic South Indian Foods</div>
@@ -975,7 +986,6 @@ function placeOrder(){
   lastOrder = JSON.parse(JSON.stringify(cart));
   // ⭐ SAVE ORDER TO FIREBASE
 saveOrderToFirebase();
-  clearPaymentForms();
 
 
 
@@ -1178,42 +1188,6 @@ function resetEntireOrder(){
   // ✅ clear payment inputs
   clearPaymentForms();
 }
-  function clearPaymentForms(){
-
-  // CARD
-  let card = document.getElementById("cardNumber");
-  let expiry = document.getElementById("expiry");
-  let cvv = document.getElementById("cvv");
-
-  if(card) card.value="";
-  if(expiry) expiry.value="";
-  if(cvv) cvv.value="";
-
-  // reset preview
-  let previewNumber = document.getElementById("previewNumber");
-  let previewExpiry = document.getElementById("previewExpiry");
-
-  if(previewNumber) previewNumber.innerText="•••• •••• •••• ••••";
-  if(previewExpiry) previewExpiry.innerText="MM/YY";
-
-
-  // ✅ UPI
-  let upi = document.getElementById("upiId");
-  if(upi) upi.value="";
-
-  let qrBox = document.getElementById("upiQRBox");
-  if(qrBox) qrBox.style.display="none";
-
-
-  // ✅ COD
-  let name = document.getElementById("custName");
-  let phone = document.getElementById("custPhone");
-  let addr = document.getElementById("custAddress");
-
-  if(name) name.value="";
-  if(phone) phone.value="";
-  if(addr) addr.value="";
-}
 async function saveOrderToFirebase(){
 
   if(!window.db){
@@ -1228,6 +1202,7 @@ async function saveOrderToFirebase(){
       orderId: currentOrderId,
       items: lastOrder,
       total: total,
+      status: "Placed",
       created: new Date().toLocaleString()
     });
 
@@ -1274,5 +1249,3 @@ window.addDoc = addDoc;
 
 </body>
 </html>
-
-
