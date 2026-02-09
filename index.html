@@ -974,18 +974,9 @@ function placeOrder(){
   // ✅ STORE ORDER BEFORE CLEARING
   lastOrder = JSON.parse(JSON.stringify(cart));
   // ⭐ SAVE ORDER TO FIREBASE
-if(window.db){
+saveOrderToFirebase();
 
-  let total = document.getElementById("total").innerText;
 
-  addDoc(collection(window.db,"orders"),{
-    orderId: currentOrderId,
-    items: lastOrder,
-    total: total,
-    created: new Date().toLocaleString()
-  });
-
-}
 
   let items = document.getElementById("orderItems");
   items.innerHTML = `<p><strong>Order ID:</strong> ${currentOrderId}</p>`;
@@ -1185,6 +1176,29 @@ function resetEntireOrder(){
 
   // ✅ clear payment inputs
   clearPaymentForms();
+}
+async function saveOrderToFirebase(){
+
+  if(!window.db){
+    console.log("DB not ready");
+    return;
+  }
+
+  let total = document.getElementById("total").innerText;
+
+  try{
+    await addDoc(collection(window.db,"orders"),{
+      orderId: currentOrderId,
+      items: lastOrder,
+      total: total,
+      created: new Date().toLocaleString()
+    });
+
+    console.log("Order saved to Firebase ✅");
+
+  }catch(e){
+    console.error("Firebase error", e);
+  }
 }
 
 </script>
