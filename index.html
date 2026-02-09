@@ -975,6 +975,7 @@ function placeOrder(){
   lastOrder = JSON.parse(JSON.stringify(cart));
   // ⭐ SAVE ORDER TO FIREBASE
 saveOrderToFirebase();
+  clearPaymentForms();
 
 
 
@@ -1237,3 +1238,4 @@ window.addDoc = addDoc;
 
 </body>
 </html>
+
