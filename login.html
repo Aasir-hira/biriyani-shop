@@ -7,7 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-
+*{
+  box-sizing:border-box;
+}
 body{
   margin:0;
   height:100vh;
@@ -23,7 +25,8 @@ body{
 /* ===== LOGIN CONTAINER ===== */
 
 .login-wrapper{
-  width:380px;
+  width:90%;
+  max-width:380px;
   padding:45px 40px;
   border-radius:20px;
   background:linear-gradient(
@@ -136,7 +139,7 @@ button:hover{
 function login(){
 
   const USER = "admin";
-  const PASS = "ara@1604";
+  const PASS = "12345";
 
   let u = document.getElementById("user").value;
   let p = document.getElementById("pass").value;
