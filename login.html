@@ -125,9 +125,8 @@ button:hover{
     <span>ADMIN ACCESS</span>
   </div>
 
-  <input type="text" id="user" placeholder="Admin Username">
-  <input type="password" id="pass" placeholder="Password">
-
+ <input type="text" id="user" placeholder="Admin Username" autocomplete="off">
+<input type="password" id="pass" placeholder="Password" autocomplete="new-password">
   <button onclick="login()">Sign In</button>
 
   <div class="error" id="error"></div>
@@ -156,6 +155,13 @@ if(validAdmin){
 }
 
 }
+
+// Page load aagumbothu clear pannum
+window.onload = function() {
+    document.getElementById("user").value = "";
+    document.getElementById("pass").value = "";
+}
+
 </script>
 
 </body>
