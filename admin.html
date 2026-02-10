@@ -197,7 +197,29 @@ select{
 .delete:hover{
   background:#3a1414;
 }
+.placed{
+  border-left:6px solid gold;
+}
 
+.preparing{
+  border-left:6px solid #3498db;
+}
+
+.ready{
+  border-left:6px solid orange;
+}
+
+.delivered{
+  border-left:6px solid #2ecc71;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+  flex-wrap:wrap;
+  gap:10px;
+}
 </style>
 </head>
 
@@ -212,9 +234,19 @@ if(localStorage.getItem("adminLoggedIn")!=="true"){
 
 <div class="header">
   <div class="title">Royal Spice <span>Admin</span></div>
+
+  <div id="adminInfo"></div>
+
+  <div id="liveCount"></div>
+
   <button class="logout" onclick="logout()">Logout</button>
 </div>
-
+<div style="padding:20px;">
+<input 
+id="search"
+placeholder="Search Order ID..."
+style="padding:10px;width:260px;border-radius:10px;border:none;">
+</div>
 <div id="orders"></div>
 
 <script type="module">
@@ -240,12 +272,21 @@ const db = getFirestore(app);
 
 const ordersDiv = document.getElementById("orders");
 
+
 onSnapshot(collection(db,"orders"), snapshot=>{
+
   ordersDiv.innerHTML="";
+
+  let total = snapshot.size;
+  let delivered = 0;
 
   snapshot.forEach(d=>{
 
     const o = d.data();
+
+    if(o.status === "Delivered"){
+      delivered++;
+    }
 
     let itemsHTML="";
     for(let i in o.items){
@@ -253,7 +294,7 @@ onSnapshot(collection(db,"orders"), snapshot=>{
     }
 
     ordersDiv.innerHTML+=`
-      <div class="card">
+      <div class="card ${o.status.toLowerCase()}">
         <div class="orderId">Order #${o.orderId}</div>
 
         ${itemsHTML}
@@ -273,6 +314,24 @@ onSnapshot(collection(db,"orders"), snapshot=>{
       </div>
     `;
   });
+
+  document.getElementById("liveCount").innerText =
+  `📦 Total: ${total} | ✅ Delivered: ${delivered} | 🟡 Pending: ${total-delivered}`;
+
+});
+document.getElementById("search").addEventListener("keyup",function(){
+
+let val = this.value.toLowerCase();
+
+document.querySelectorAll(".card").forEach(card=>{
+
+card.style.display =
+card.innerText.toLowerCase().includes(val)
+? "block"
+: "none";
+
+});
+
 });
 
 window.updateStatus = async(id,status)=>{
