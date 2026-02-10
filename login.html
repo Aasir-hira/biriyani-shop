@@ -136,27 +136,29 @@ button:hover{
 
 <script>
 
+<script>
 function login(){
 
-  const USER = "aasir";
-  const PASS = "aasir@1604";
-   const USER = "rahman";
-  const PASS = "rahman@9117";
-   const USER = "adeep";
-  const PASS = "adeep@2006";
+const admins = [
+   {username:"aasir", password:"aasir@1604"},
+   {username:"rahman", password:"rahman@9117"},
+   {username:"adeep", password:"adeep2006"}
+];
 
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
+let u = document.getElementById("user").value;
+let p = document.getElementById("pass").value;
 
-  if(u === USER && p === PASS){
+let validAdmin = admins.find(admin => admin.username === u && admin.password === p);
+
+if(validAdmin){
     localStorage.setItem("adminLoggedIn","true");
-    window.location.href = "admin.html";
-  }else{
-    document.getElementById("error").innerText =
-      "Invalid credentials. Access denied.";
-  }
+    window.location.href="admin.html";
+}else{
+    document.getElementById("error").innerText="Invalid credentials. Access denied.";
 }
 
+}
+</script>
 </script>
 
 </body>
