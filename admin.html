@@ -210,19 +210,20 @@ select{
 <script>
 function checkAuth(){
   if(sessionStorage.getItem("adminLoggedIn") !== "true"){
-  window.location.replace("login.html");
-}
+    window.location.replace("login.html");
+  }
 }
 
 // Run immediately
 checkAuth();
 
-// Run again when page comes from back/forward cache
-window.addEventListener("pageshow", function () {
-  checkAuth();
+// 🔥 Force reload if coming from back/forward cache
+window.addEventListener("pageshow", function (event) {
+  if (event.persisted) {
+    window.location.reload();
+  }
 });
 </script>
-
 <div class="header">
   <div class="title">Royal Spice <span>Admin</span></div>
 
