@@ -149,7 +149,7 @@ let p = document.getElementById("pass").value;
 let validAdmin = admins.find(admin => admin.username === u && admin.password === p);
 
 if(validAdmin){
-    localStorage.setItem("adminLoggedIn","true");
+    sessionStorage.setItem("adminLoggedIn","true");
    window.location.replace("admin.html");
 }else{
     document.getElementById("error").innerText="Invalid credentials. Access denied.";
