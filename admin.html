@@ -246,14 +246,19 @@ const db = getFirestore(app);
 const ordersDiv = document.getElementById("orders");
 
 onSnapshot(collection(db,"orders"), snapshot=>{
+
+  ordersDiv.innerHTML = "";   // 🔥 CLEAR OLD DATA FIRST
+
   let total = snapshot.size;
-let delivered = 0;
+  let delivered = 0;
+
   snapshot.forEach(d=>{
 
     const o = d.data();
+
     if(o.status === "Delivered"){
-  delivered++;
-}
+      delivered++;
+    }
 
     let itemsHTML="";
     for(let i in o.items){
@@ -281,10 +286,11 @@ let delivered = 0;
       </div>
     `;
   });
-  document.getElementById("liveCount").innerText =
-`📦 Total: ${total} | ✅ Delivered: ${delivered} | 🟡 Pending: ${total-delivered}`;
-});
 
+  document.getElementById("liveCount").innerText =
+  `📦 Total: ${total} | ✅ Delivered: ${delivered} | 🟡 Pending: ${total-delivered}`;
+
+});
 window.updateStatus = async(id,status)=>{
   await updateDoc(doc(db,"orders",id),{status});
 };
