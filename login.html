@@ -139,7 +139,8 @@ function login(){
 const admins = [
    {username:"aasir", password:"aasir@1604"},
    {username:"rahman", password:"rahman@9117"},
-   {username:"adeep", password:"adeep@2006"}
+   {username:"adeep", password:"adeep@2006"},
+  {username:"hameed", password:"hameed@08"}
 ];
 
 let u = document.getElementById("user").value;
@@ -149,7 +150,7 @@ let validAdmin = admins.find(admin => admin.username === u && admin.password ===
 
 if(validAdmin){
     localStorage.setItem("adminLoggedIn","true");
-    window.location.href="admin.html";
+   window.location.replace("admin.html");
 }else{
     document.getElementById("error").innerText="Invalid credentials. Access denied.";
 }
