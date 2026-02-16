@@ -201,20 +201,20 @@ select{
 </style>
 </head>
 <!-- LOGIN PROTECTION -->
+
+<body>
+
 <script>
 if(localStorage.getItem("adminLoggedIn")!=="true"){
-  window.location.replace="login.html";
+  window.location.replace("login.html");
 }
-</script>
-<script>
-window.addEventListener("pageshow", function (event) {
+
+window.addEventListener("pageshow", function () {
   if (!localStorage.getItem("adminLoggedIn")) {
     window.location.replace("login.html");
   }
 });
 </script>
-<body>
-
 
 <div class="header">
   <div class="title">Royal Spice <span>Admin</span></div>
