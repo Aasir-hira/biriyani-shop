@@ -200,15 +200,21 @@ select{
 
 </style>
 </head>
-
-<body>
-
 <!-- LOGIN PROTECTION -->
 <script>
 if(localStorage.getItem("adminLoggedIn")!=="true"){
-  window.location.href="login.html";
+  window.location.replace="login.html";
 }
 </script>
+<script>
+window.addEventListener("pageshow", function (event) {
+  if (!localStorage.getItem("adminLoggedIn")) {
+    window.location.replace("login.html");
+  }
+});
+</script>
+<body>
+
 
 <div class="header">
   <div class="title">Royal Spice <span>Admin</span></div>
@@ -315,8 +321,8 @@ window.confirmDelete = async function(){
 }
 
 window.logout = function(){
-  localStorage.removeItem("adminLoggedIn");
-  window.location.href="login.html";
+  localStorage.clear();
+  window.location.replace("login.html");
 }
 
 </script>
