@@ -209,9 +209,9 @@ select{
 
 <script>
 function checkAuth(){
-  if(localStorage.getItem("adminLoggedIn") !== "true"){
-    window.location.replace("login.html");
-  }
+  if(sessionStorage.getItem("adminLoggedIn") !== "true"){
+  window.location.replace("login.html");
+}
 }
 
 // Run immediately
@@ -328,7 +328,7 @@ window.confirmDelete = async function(){
 }
 
 window.logout = function(){
-  localStorage.clear();
+  sessionStorage.clear();
   window.location.replace("login.html");
 }
 
