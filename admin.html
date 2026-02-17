@@ -14,7 +14,7 @@
 body{
   margin:0;
   font-family:Poppins;
-  background:radial-gradient(circle,#1b1e24,#0d0f13);
+  background:radial-gradient(circle at top left,#1e232b,#0d0f13 60%);
   color:#eee;
 }
 
@@ -23,15 +23,23 @@ body{
 @media (max-width:768px){
 
   .header{
-    padding:15px 20px;
-    flex-direction:column;
-    gap:10px;
-    text-align:center;
-  }
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 60px;
+  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,.04);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
 
-  .title{
-    font-size:20px;
-  }
+ .title{
+  font-size:28px;
+  font-weight:600;
+  letter-spacing:1px;
+}
 
   .logout{
     width:100%;
@@ -74,7 +82,13 @@ body{
   max-width:1400px;
   margin:auto;
 }
-
+#liveCount{
+  font-size:14px;
+  opacity:.85;
+  background:rgba(255,255,255,.05);
+  padding:8px 16px;
+  border-radius:30px;
+}
 /* ORDER CARD */
 
 .card{
