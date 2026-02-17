@@ -66,13 +66,13 @@ body{
   color:#d4af37;
 }
 
-/* ORDERS GRID */
-
 #orders{
-  padding:20px;
+  padding:40px 60px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:30px;
+  max-width:1400px;
+  margin:auto;
 }
 
 /* ORDER CARD */
@@ -87,6 +87,15 @@ body{
   );
   backdrop-filter:blur(14px);
   box-shadow:0 10px 30px rgba(0,0,0,.6);
+
+  min-height:320px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.card:hover{
+  transform:translateY(-6px);
+  transition:.3s;
 }
 
 .orderId{
