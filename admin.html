@@ -22,18 +22,9 @@ body{
 
 @media (max-width:768px){
 
-  .header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:20px 60px;
-  backdrop-filter:blur(18px);
-  background:rgba(255,255,255,.04);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
+.header{
+    padding:20px;
+  }
 
  .title{
   font-size:28px;
@@ -42,15 +33,34 @@ body{
 }
 
   .logout{
-    width:100%;
+    position:static;
+    transform:none;
+    margin-top:15px;
   }
 
+}
+.header{
+  position:relative;
+  padding:25px 60px;
+  backdrop-filter:blur(18px);
+  background:rgba(255,255,255,.04);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  text-align:center;
 }
 
 .title{
   font-size:26px;
   font-weight:600;
   letter-spacing:.5px;
+}
+#liveCount{
+  margin:10px auto 0;
+  font-size:14px;
+  opacity:.9;
+  background:rgba(255,255,255,.05);
+  padding:8px 16px;
+  border-radius:30px;
+  display:inline-block;
 }
 
 .title span{
@@ -60,6 +70,10 @@ body{
 /* LOGOUT */
 
 .logout{
+  position:absolute;
+  right:60px;
+  top:50%;
+  transform:translateY(-50%);
   background:transparent;
   border:1px solid rgba(255,255,255,.2);
   color:#eee;
@@ -81,13 +95,6 @@ body{
   gap:30px;
   max-width:1400px;
   margin:auto;
-}
-#liveCount{
-  font-size:14px;
-  opacity:.85;
-  background:rgba(255,255,255,.05);
-  padding:8px 16px;
-  border-radius:30px;
 }
 /* ORDER CARD */
 
