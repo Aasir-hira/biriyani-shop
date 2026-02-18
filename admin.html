@@ -254,6 +254,39 @@ select{
 .delete:hover{
   background:#3a1414;
 }
+/* ===== STATS SECTION ===== */
+
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin:40px auto;
+  flex-wrap:wrap;
+}
+
+.stat-box{
+  background:rgba(255,255,255,.9);
+  padding:25px 40px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,.15);
+  min-width:180px;
+}
+
+.stat-box h3{
+  margin:0;
+  font-size:28px;
+  color:#b34700;
+}
+
+.stat-box p{
+  margin:5px 0 0;
+  font-size:14px;
+  opacity:.7;
+}
+
+.delivered h3{ color:#28a745; }
+.pending h3{ color:#e6b800; }
 
 </style>
 </head>
@@ -287,9 +320,26 @@ window.addEventListener("pageshow", function (event) {
 
   <div id="adminInfo"></div>
 
-  <div id="liveCount"></div>
 
   <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<!-- 🔥 ADD THIS STATS SECTION HERE -->
+<div class="stats">
+  <div class="stat-box">
+    <h3 id="totalCount">0</h3>
+    <p>Total Orders</p>
+  </div>
+
+  <div class="stat-box delivered">
+    <h3 id="deliveredCount">0</h3>
+    <p>Delivered</p>
+  </div>
+
+  <div class="stat-box pending">
+    <h3 id="pendingCount">0</h3>
+    <p>Pending</p>
+  </div>
 </div>
 
 <div id="orders"></div>
@@ -359,9 +409,9 @@ onSnapshot(collection(db,"orders"), snapshot=>{
     `;
   });
 
-  document.getElementById("liveCount").innerText =
-  `📦 Total: ${total} | ✅ Delivered: ${delivered} | 🟡 Pending: ${total-delivered}`;
-
+ document.getElementById("totalCount").innerText = total;
+document.getElementById("deliveredCount").innerText = delivered;
+document.getElementById("pendingCount").innerText = total - delivered;
 });
 window.updateStatus = async(id,status)=>{
   await updateDoc(doc(db,"orders",id),{status});
