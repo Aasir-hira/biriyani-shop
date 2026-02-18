@@ -230,29 +230,27 @@ select{
 <!-- LOGIN PROTECTION -->
 
 <body>
-  <script>
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-  history.go(1);
-};
-</script>
-
 <script>
-function checkAuth(){
-  if(sessionStorage.getItem("adminLoggedIn") !== "true"){
-    window.location.replace("login.html");
-  }
+
+/* 🔐 Protect Admin Page */
+if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+  window.location.replace("login.html");
 }
 
-// Run immediately
-checkAuth();
+/* 🚪 Logout when back button pressed */
+history.pushState(null, null, location.href);
 
-// 🔥 Force reload if coming from back/forward cache
+window.addEventListener("popstate", function () {
+  logout();
+});
+
+/* 🔥 Prevent cache restore */
 window.addEventListener("pageshow", function (event) {
   if (event.persisted) {
-    window.location.reload();
+    logout();
   }
 });
+
 </script>
 <div class="header">
   <div class="title">Royal Spice <span>Admin</span></div>
